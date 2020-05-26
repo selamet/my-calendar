@@ -63,7 +63,7 @@
         if (this.date.month > 11) {
           this.date.month = 0;
           this.date.year++;
-          this.setYearDaysCount(this.date.year);
+          this.yearDaysCount = this.setYearDaysCount(this.date.year);
         }
 
       },
@@ -72,6 +72,7 @@
         if (this.date.month < 0) {
           this.date.month = 11;
           this.date.year--;
+          this.yearDaysCount = this.setYearDaysCount(this.date.year);
         }
       },
       setFormatDate() {
