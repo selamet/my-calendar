@@ -1,6 +1,6 @@
 <template>
   <div class="calender">
-    <h1>CUSTOM <span>DATE</span> PICKER</h1>
+    <h1><span> MY</span> CALENDER </h1>
 
 
     <div class="date-picker">
@@ -16,7 +16,8 @@
         </div>
 
         <div class="days">
-          <div class="day" v-for="i in yearDaysCount[date.month]">{{i}}</div>
+          <div class="day" v-for="i in addDiv.start"></div>
+          <div :class="{selected : i === date.day}" class="day" v-for="i in yearDaysCount[date.month]"> {{i}}</div>
         </div>
       </div>
     </div>
@@ -45,19 +46,21 @@
           month: '',
           year: ''
         },
+        selectedDate: {
+          day: '',
+          month: '',
+          year: ''
+        },
+        addDiv: {
+          start: '',
+          end: ''
+        },
         formatDate: '',
-        yearDaysCount: null,
+        yearDaysCount: '',
       }
     },
     methods: {
-      checkEventPathForClass(path, selector) {
-        for (let i = 0; i < path.length; i++) {
-          if (path[i].classList && path[i].classList.contains(selector)) {
-            return true
-          }
-        }
-        return false
-      },
+
       goToNextMonth() {
         this.date.month++;
         if (this.date.month > 11) {
@@ -65,6 +68,7 @@
           this.date.year++;
           this.yearDaysCount = this.setYearDaysCount(this.date.year);
         }
+        this.addPrevMonthDiv(this.date.year, this.date.month)
 
       },
       goToPrevMonth() {
@@ -99,15 +103,24 @@
 
         }
         return days
-      }
+      },
+      addPrevMonthDiv(date) {
+        console.log(date.getFullYear(), date.getMonth())
+        let d = new Date(date.getFullYear(), date.getMonth(), 0);
+        this.addDiv.start = d.getDay();
+
+      },
     },
     mounted() {
       let date = new Date();
       this.date.month = date.getMonth();
-      this.date.day = date.getDay();
+      this.date.day = date.getDate();
       this.date.year = date.getFullYear();
       this.formatDate = this.setFormatDate();
       this.yearDaysCount = this.setYearDaysCount(date.getFullYear());
+      this.addPrevMonthDiv(date);
+
+
     }
 
   }
@@ -203,8 +216,13 @@
 
   }
 
+  .date-picker .dates .days .day:hover {
+    background-color: #f3f3f3;
+
+  }
+
   .date-picker .dates .days .day.selected {
-    background-color: #00CA85;
+    background-color: #FFCE00;
   }
 
 </style>
