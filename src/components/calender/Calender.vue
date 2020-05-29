@@ -13,25 +13,22 @@
 
 
         <div class="day-name-list">
-          <div class="day-name"><p>Pazartesi</p></div>
-          <div class="day-name"><p>Salı</p></div>
-          <div class="day-name"><p>Çarşamba</p></div>
-          <div class="day-name"><p>Perşembe</p></div>
-          <div class="day-name"><p>Cuma</p></div>
-          <div class="day-name"><p>Cumartesi</p></div>
-          <div class="day-name"><p>Pazar</p></div>
+          <div class="day-name" v-for="i in days"><p>{{i}}</p></div>
+
         </div>
 
         <div class="days">
 
+          <div class="day day-other"
+               v-for="i in range(yearDaysCount[date.month]-addDiv.start+1,yearDaysCount[date.month])"><span
+            class="day-no">{{i}}</span></div>
 
-          <div class="day" v-for="i in addDiv.start"></div>
           <div :class="{selected : i === thisDate.day && date.month===thisDate.month && date.year ===thisDate.year }"
                class="day"
                v-for="i in yearDaysCount[date.month]">
             <span class="day-no">{{i}}</span>
           </div>
-          <div class="day" v-for="i in addDiv.end"></div>
+          <div class="day day-other" v-for="i in addDiv.end"><span class="day-no">{{i}}</span></div>
         </div>
       </div>
     </div>
@@ -47,6 +44,7 @@
     data() {
       return {
         months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
         date: {
           day: '',
           month: '',
@@ -66,6 +64,9 @@
       }
     },
     methods: {
+      range: function (start, end) {
+        return Array(end - start + 1).fill().map((_, idx) => start + idx)
+      },
 
       goToNextMonth() {
         this.date.month++;
@@ -113,9 +114,9 @@
       },
       addDayOtherMonth(year, month) {
         let start = new Date(year, month, 0);
-        let finish = 7 - ((start.getDay() + this.yearDaysCount[month]) % 7);
         this.addDiv.start = start.getDay();
-        this.addDiv.end = finish;
+        this.addDiv.end = 42 - (this.yearDaysCount[month] + start.getDay());
+
 
       },
 
@@ -165,6 +166,8 @@
     margin: 20px auto;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
     user-select: none;
+    display: grid;
+
 
   }
 
@@ -177,15 +180,16 @@
     background-color: #fff;
   }
 
-  .date-picker  .month {
+  .date-picker .month {
+
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid #EEE;
     font-size: 28px;
   }
 
-  .date-picker  .month .arrows {
+  .date-picker .month .arrows {
+
     width: 35px;
     height: 35px;
     display: flex;
@@ -195,39 +199,46 @@
     font-size: 20px;
   }
 
-  .date-picker  .month .arrows:hover {
+  .date-picker .month .arrows:hover {
     background-color: #f3f3f3;
   }
 
-  .date-picker  .month .arrows:active {
+  .date-picker .month .arrows:active {
     background-color: #00CA85;
   }
 
   .date-picker .dates .days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    height: 60vh;
+    height: 70vh;
   }
 
   .date-picker .dates .days .day {
     display: grid;
 
     grid-template-columns: repeat(4, 1fr 1fr 1fr 1fr);
-    grid-template-rows: repeat(3, [row] auto );
+    grid-template-rows: repeat(10, [row] auto);
     justify-content: center;
     align-items: center;
     color: #313131;
-    border : 0.1px solid #ddd;
+    border: 0.1px solid #ddd;
 
   }
 
+
   .date-picker .dates .days .day .day-no {
-    margin-right:3px;
+    margin-right: 4px;
     grid-column: col 3 / span 1;
-    grid-row : row 4 / span 1;
-    font-size: 14px;
-    font-family: sans-serif ;
-    color: #20232a;
+    grid-row: row 10 / span 1;
+    font-size: 16px;
+    font-family: 'Noto Sans TC', sans-serif;
+    color: #393e46;
+
+
+  }
+
+  .date-picker .dates .days .day-other .day-no {
+    color: #bdbdc0;
 
   }
 
@@ -235,7 +246,7 @@
   .date-picker .dates .day-name-list {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    height: 5vh;
+    height: 4vh;
 
   }
 
@@ -244,6 +255,7 @@
     justify-content: center;
     align-items: center;
     color: #313131;
+    border: 0.1px solid #ddd;
   }
 
   .date-picker .dates .days .day:hover {
@@ -252,7 +264,7 @@
   }
 
   .date-picker .dates .days .day.selected {
-    background-color: #FFCE00;
+    background-color: #fcf8e3;
   }
 
 </style>
