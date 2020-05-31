@@ -23,12 +23,27 @@
                v-for="i in range(yearDaysCount[date.month]-addDiv.start+1,yearDaysCount[date.month])"><span
             class="day-no">{{i}}</span></div>
 
-          <div :class="{selected : i === thisDate.day && date.month===thisDate.month && date.year ===thisDate.year }"
+          <div :class="{
+             today : i === thisDate.day && date.month===thisDate.month && date.year ===thisDate.year,
+             growDiv : i === selectedDate.day
+          }"
+
                class="day"
-               v-for="i in yearDaysCount[date.month]">
+               v-for="i in yearDaysCount[date.month]"
+               @click="selectDay(i)"
+          >
+
+            <div class="detail" v-if="detailStatus && i === selectedDate.day && date.month===thisDate.month && date.year ===thisDate.year">
+              <span class="exit-button "><i class="fa fa-times-circle"></i></span>
+
+            </div>
             <span class="day-no">{{i}}</span>
+
+
           </div>
+
           <div class="day day-other" v-for="i in addDiv.end"><span class="day-no">{{i}}</span></div>
+
         </div>
       </div>
     </div>
@@ -55,10 +70,16 @@
           month: '',
           year: ''
         },
+        selectedDate: {
+          day: '',
+          month: '',
+          year: ''
+        },
         addDiv: {
           start: '',
           end: ''
         },
+        detailStatus: false,
         formatDate: '',
         yearDaysCount: '',
       }
@@ -119,6 +140,18 @@
 
 
       },
+      selectDay(day) {
+        console.log('day: ', day);
+        this.selectedDate = {
+          day: day,
+          month: this.date.month,
+          year: this.date.year,
+        }
+        this.detailStatus = true;
+        console.log(this.selectedDate.day)
+
+
+      },
 
 
     },
@@ -161,7 +194,7 @@
   .date-picker {
     position: relative;
     width: 80%;
-    height: 10vh;
+    height: 60px;
     background-color: #fff;
     margin: 20px auto;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
@@ -210,12 +243,11 @@
   .date-picker .dates .days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    height: 70vh;
+    height: 580px;
   }
 
   .date-picker .dates .days .day {
     display: grid;
-
     grid-template-columns: repeat(4, 1fr 1fr 1fr 1fr);
     grid-template-rows: repeat(10, [row] auto);
     justify-content: center;
@@ -230,9 +262,10 @@
     margin-right: 4px;
     grid-column: col 3 / span 1;
     grid-row: row 10 / span 1;
-    font-size: 16px;
-    font-family: 'Noto Sans TC', sans-serif;
-    color: #393e46;
+    font-size: 14px;
+    font-family: 'Muli', sans-serif;
+    color: #20232a;
+    line-height: 24px;
 
 
   }
@@ -246,7 +279,7 @@
   .date-picker .dates .day-name-list {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    height: 4vh;
+    height: 30px;
 
   }
 
@@ -263,8 +296,22 @@
 
   }
 
-  .date-picker .dates .days .day.selected {
+  .date-picker .dates .days .today {
     background-color: #fcf8e3;
+
   }
+
+  .date-picker .dates .days .growDiv {
+    transform: scale(2.5);
+    background-color: whitesmoke;
+
+  }
+  .date-picker .dates .days .detail {
+    font-size: 12px;
+    grid-column: col 3 / span 1;
+    grid-row:  0 / span 4;
+
+  }
+
 
 </style>
