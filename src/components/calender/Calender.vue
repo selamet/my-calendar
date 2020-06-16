@@ -16,7 +16,10 @@
           <div class="day-name" v-for="i in days"><p>{{i}}</p></div>
 
         </div>
+        <div id="detail">
+          <appDetail></appDetail>
 
+        </div>
         <div class="days">
 
           <div class="day day-other"
@@ -25,7 +28,7 @@
 
           <div :class="{
              today : i === thisDate.day && date.month===thisDate.month && date.year ===thisDate.year,
-             growDiv : i === selectedDate.day
+             growDiv : i === selectedDate.day && date.month===selectedDate.month && date.year ===selectedDate.year
           }"
 
                class="day"
@@ -33,10 +36,7 @@
                @click="selectDay(i)"
           >
 
-            <div class="detail" v-if="detailStatus && i === selectedDate.day && date.month===thisDate.month && date.year ===thisDate.year">
-              <span class="exit-button "><i class="fa fa-times-circle"></i></span>
 
-            </div>
             <span class="day-no">{{i}}</span>
 
 
@@ -55,7 +55,12 @@
 
 <script>
 
+  import Detail from './Detail'
+
   export default {
+    components: {
+      appDetail: Detail,
+    },
     data() {
       return {
         months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
@@ -142,13 +147,22 @@
       },
       selectDay(day) {
         console.log('day: ', day);
-        this.selectedDate = {
-          day: day,
-          month: this.date.month,
-          year: this.date.year,
-        }
+
         this.detailStatus = true;
         console.log(this.selectedDate.day)
+        this.showDetail(event);
+
+
+      },
+      showDetail(event) {
+        let x = event.clientX;
+        let y = event.clientY;
+        let detail = document.getElementById("detail");
+        detail.style.display = '';
+        detail.style.position = 'absolute';
+        console.log(x, y);
+        detail.style.left = x-300 + 'px';
+        detail.style.top = y-250 + 'px';
 
 
       },
@@ -304,12 +318,6 @@
   .date-picker .dates .days .growDiv {
     transform: scale(2.5);
     background-color: whitesmoke;
-
-  }
-  .date-picker .dates .days .detail {
-    font-size: 12px;
-    grid-column: col 3 / span 1;
-    grid-row:  0 / span 4;
 
   }
 
