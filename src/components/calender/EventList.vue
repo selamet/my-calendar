@@ -1,11 +1,46 @@
 <template>
   <div class="row">
 
-    <div class="detail">
 
-      <transition name="fade" mode="out-in">
-        <router-view></router-view>
-      </transition>
+    <div class="detail">
+      <div class="event-list">
+
+      </div>
+      <div class="event-create">
+        <div class="clock">
+
+          <span>Time: </span>
+          <select class="form-control">
+            <option selected disabled>00</option>
+            <option v-for=" i in range(1,9)">0{{i}}</option>
+            <option v-for=" i in range(10,24)">{{i}}</option>
+
+          </select>
+          <select class="form-control">
+            <option selected disabled>00</option>
+            <option v-for=" i in range(1,9)">0{{i}}</option>
+            <option v-for=" i in range(10,59)">{{i}}</option>
+          </select>
+
+
+        </div>
+        <div class="title">
+          <span>Title: </span>
+          <input class="form-control" type="text">
+        </div>
+        <div class="description">
+          <span>Description: </span>
+          <textarea class="form-control" cols="23" rows="4"></textarea>
+        </div>
+
+        <div class="save-button">
+          <a class="btn btn-primary btn-block">Save</a>
+        </div>
+
+      </div>
+      <div class="buttons">
+        <span class="exit-button "><i class="fa fa-times-circle"></i></span>
+      </div>
 
     </div>
   </div>
@@ -29,7 +64,7 @@
 <style scoped>
 
   .row {
-    display: none;
+
     background-color: lightblue;
     width: 400px;
     height: 250px;

@@ -10,21 +10,21 @@
         <div @click="goToNextMonth" class="arrows next-mth">&gt;</div>
       </div>
       <div class="dates">
-
+        <div>
+          <appDetail id="detail"></appDetail>
+        </div>
 
         <div class="day-name-list">
           <div class="day-name" v-for="i in days"><p>{{i}}</p></div>
 
         </div>
-        <div id="detail">
-          <appDetail></appDetail>
 
-        </div>
         <div class="days">
 
           <div class="day day-other"
                v-for="i in range(yearDaysCount[date.month]-addDiv.start+1,yearDaysCount[date.month])"><span
             class="day-no">{{i}}</span></div>
+
 
           <div :class="{
              today : i === thisDate.day && date.month===thisDate.month && date.year ===thisDate.year,
@@ -56,6 +56,7 @@
 <script>
 
   import Detail from './Detail'
+  import router from "../../router";
 
   export default {
     components: {
@@ -155,14 +156,15 @@
 
       },
       showDetail(event) {
+        router.push({ name: 'event-list' })
         let x = event.clientX;
         let y = event.clientY;
         let detail = document.getElementById("detail");
-        detail.style.display = '';
+        detail.style.display = 'block';
         detail.style.position = 'absolute';
         console.log(x, y);
-        detail.style.left = x-300 + 'px';
-        detail.style.top = y-250 + 'px';
+        detail.style.left = x - 300 + 'px';
+        detail.style.top = y - 250 + 'px';
 
 
       },
