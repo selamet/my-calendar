@@ -1,12 +1,17 @@
 <template>
+
   <div class="row">
-
     <div class="detail">
+      <transition
+        mode="out-in"
+        name="custom-classes-transition"
+        enter-active-class="animate__animated animate__fadeIn animate__faster"
+        leave-active-class="animate__animated animate__fadeOut animate__faster"
+      >
+        <app-event-list v-if="createStatus" @goToEventCreate="changePlease=$event"></app-event-list>
 
-      <transition name="fade" mode="out-in">
-        <router-view></router-view>
+        <app-event-create v-else @goToEventList="changePlease=$event"></app-event-create>
       </transition>
-
     </div>
   </div>
 
@@ -14,13 +19,32 @@
 
 
 <script>
+  import EventList from "./EventList";
+  import EventCreate from "./EventCreate";
+
 
   export default {
+    components: {
+      appEventList: EventList,
+      appEventCreate: EventCreate
 
+    },
+    data() {
+      return {
+        createStatus: false,
+        changePlease: false
+      }
+    },
+    watch: {
+      changePlease() {
+        this.createStatus = !this.createStatus
+      }
+    },
     methods: {
       range: function (start, end) {
         return Array(end - start + 1).fill().map((_, idx) => start + idx)
-      }
+      },
+
     }
   }
 </script>
@@ -41,69 +65,6 @@
     display: grid;
     grid-template-columns: 5fr 5fr 0.3fr;
 
-  }
-
-  .row .detail .event-list {
-
-    width: 100%;
-    height: 100%;
-    background-color: red;
-
-  }
-
-  .row .detail .event-create {
-
-    width: 100%;
-    background-color: #00CA85;
-    height: 100%;
-    display: grid;
-    grid-template-rows: 50px 60px 150px 50px;
-
-  }
-
-  .row .detail .event-create .clock {
-
-    background-color: #00CA85;
-
-    display: grid;
-    margin: 10px;
-    grid-template-columns: 5fr 1fr 1fr;
-    grid-template-rows: 1fr 5fr 1fr;
-    grid-gap: 5px;
-
-  }
-
-  .row .detail .event-create .title {
-    margin: 0 0 10px 10px;
-    width: 90%;
-    height: 30px;
-
-  }
-
-  .row .detail .event-create .description {
-    margin: 10px;
-
-  }
-
-  .row .detail .event-create .save-button {
-    margin: 8px;
-    width: 90%;
-    font-size: 12px;
-    color: whitesmoke;
-
-  }
-
-  .row .detail .event-create select {
-
-    width: 65px;
-    height: 30px;
-
-  }
-
-  .row .detail .buttons {
-    width: 100%;
-    background-color: #bdbdc0;
-    height: 100%;
   }
 
 

@@ -56,7 +56,6 @@
 <script>
 
   import Detail from './Detail'
-  import router from "../../router";
 
   export default {
     components: {
@@ -156,7 +155,6 @@
 
       },
       showDetail(event) {
-        router.push({ name: 'event-list' })
         let x = event.clientX;
         let y = event.clientY;
         let detail = document.getElementById("detail");
@@ -165,6 +163,7 @@
         console.log(x, y);
         detail.style.left = x - 300 + 'px';
         detail.style.top = y - 250 + 'px';
+
 
 
       },
