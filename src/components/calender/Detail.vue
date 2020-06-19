@@ -2,7 +2,7 @@
 
   <div class="row">
     <div class="detail">
-      <transition
+      <transition appear
         mode="out-in"
         name="custom-classes-transition"
         enter-active-class="animate__animated animate__fadeIn animate__faster"
@@ -54,16 +54,16 @@
 
   .row {
     display: none;
-    background-color: lightblue;
+    background-color: #f7f7f7;
     width: 400px;
-    height: 250px;
+    height: 260px;
+
   }
 
   .row .detail {
     width: 100%;
     height: 100%;
-    display: grid;
-    grid-template-columns: 5fr 5fr 0.3fr;
+
 
   }
 
