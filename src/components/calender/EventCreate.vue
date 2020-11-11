@@ -101,7 +101,6 @@
   .event-inputs {
     display: grid;
     grid-template-columns: 5fr 5fr;
-
     grid-column-gap: 5rem;
     align-items: center;
     margin-left: 10px;
@@ -110,7 +109,7 @@
   .description {
     grid-column: 1/3;
     width: 380px;
-    height: 80px
+    height: 80px;
   }
 
   .tags {

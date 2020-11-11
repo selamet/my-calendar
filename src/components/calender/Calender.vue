@@ -1,13 +1,11 @@
 <template>
   <div class="calender">
     <h1><span> MY</span> CALENDER </h1>
-
-
     <div class="date-picker">
       <div class="month">
-        <div @click="goToPrevMonth" class="arrows prev-mth">&lt;</div>
-        <div class="mth"> {{months[date.month]}} {{date.year}}</div>
-        <div @click="goToNextMonth" class="arrows next-mth">&gt;</div>
+        <div @click="goToPrevMonth()" class="arrows prev-mth">&lt;</div>
+        <div class="mth"> {{calenderData.months[calenderData.date.month]}} {{calenderData.date.year}}</div>
+        <div @click="goToNextMonth()" class="arrows next-mth">&gt;</div>
       </div>
       <div class="dates">
         <div>
@@ -15,40 +13,37 @@
         </div>
 
         <div class="day-name-list">
-          <div class="day-name" v-for="i in days"><p>{{i}}</p></div>
+          <div class="day-name" v-for="i in calenderData.days"><p>{{i}}</p></div>
 
         </div>
 
         <div class="days">
-
           <div class="day day-other"
-               v-for="i in range(yearDaysCount[date.month]-addDiv.start+1,yearDaysCount[date.month])"><span
+               v-for="i in range(calenderData.yearDaysCount[calenderData.date.month]-calenderData.addDiv.start+1,calenderData.yearDaysCount[calenderData.date.month])"><span
             class="day-no">{{i}}</span></div>
 
-
           <div :class="{
-             today : i === thisDate.day && date.month===thisDate.month && date.year ===thisDate.year,
-             growDiv : i === selectedDate.day && date.month===selectedDate.month && date.year ===selectedDate.year
+             today : i === calenderData.today.day && calenderData.date.month === calenderData.today.month && calenderData.date.year === calenderData.today.year,
+             growDiv : i === calenderData.selectedDate.day && calenderData.date.month === calenderData.selectedDate.month && calenderData.date.year === calenderData.selectedDate.year
           }"
 
                class="day"
-               v-for="i in yearDaysCount[date.month]"
+               v-for="i in calenderData.yearDaysCount[calenderData.date.month]"
                @click="selectDay(i)"
           >
 
-
             <span class="day-no">{{i}}</span>
 
-
           </div>
-
-          <div class="day day-other" v-for="i in addDiv.end"><span class="day-no">{{i}}</span></div>
+          <div class="day day-other" v-for="i in calenderData.addDiv.end"><span class="day-no">{{i}}</span></div>
 
         </div>
+
+
       </div>
     </div>
-
   </div>
+
 
 </template>
 
@@ -56,103 +51,21 @@
 <script>
 
   import Detail from './Detail'
+  import {mapGetters, mapMutations} from "vuex";
+  import {setYearDaysCount,setFormatDate} from "../../set_values";
 
   export default {
+
     components: {
       appDetail: Detail,
-    },
-    data() {
-      return {
-        months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        date: {
-          day: '',
-          month: '',
-          year: ''
-        },
-        thisDate: {
-          day: '',
-          month: '',
-          year: ''
-        },
-        selectedDate: {
-          day: '',
-          month: '',
-          year: ''
-        },
-        addDiv: {
-          start: '',
-          end: ''
-        },
-        detailStatus: false,
-        formatDate: '',
-        yearDaysCount: '',
-      }
     },
     methods: {
       range: function (start, end) {
         return Array(end - start + 1).fill().map((_, idx) => start + idx)
       },
-
-      goToNextMonth() {
-        this.date.month++;
-        if (this.date.month > 11) {
-          this.date.month = 0;
-          this.date.year++;
-          this.yearDaysCount = this.setYearDaysCount(this.date.year);
-        }
-        this.addDayOtherMonth(this.date.year, this.date.month);
-
-      },
-      goToPrevMonth() {
-        this.date.month--;
-        if (this.date.month < 0) {
-          this.date.month = 11;
-          this.date.year--;
-          this.yearDaysCount = this.setYearDaysCount(this.date.year);
-        }
-        this.addDayOtherMonth(this.date.year, this.date.month);
-      },
-      setFormatDate() {
-        let d = new Date();
-        let day = d.getDate();
-        if (day < 10) {
-          day = '0' + day;
-        }
-        let month = d.getMonth() + 1;
-        if (month < 10) {
-          month = '0' + month;
-        }
-        let year = d.getFullYear();
-        console.log(day + ' / ' + month + ' / ' + year);
-        return day + ' / ' + month + ' / ' + year
-      },
-      setYearDaysCount(year) {
-        let days = [];
-        if (year % 4 === 0) {
-          days = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
-        } else {
-          days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
-        }
-        return days
-      },
-      addDayOtherMonth(year, month) {
-        let start = new Date(year, month, 0);
-        this.addDiv.start = start.getDay();
-        this.addDiv.end = 42 - (this.yearDaysCount[month] + start.getDay());
-
-
-      },
       selectDay(day) {
-        console.log('day: ', day);
-
-        this.detailStatus = true;
-        console.log(this.selectedDate.day)
+        this.$store.state.calenderData.detailStatus = true;
         this.showDetail(event);
-
-
       },
       showDetail(event) {
         let x = event.clientX;
@@ -160,35 +73,49 @@
         let detail = document.getElementById("detail");
         detail.style.display = 'block';
         detail.style.position = 'absolute';
-        console.log(x, y);
         detail.style.left = x - 300 + 'px';
         detail.style.top = y - 250 + 'px';
-
-
-
       },
+
+      ...mapMutations([
+        'goToNextMonth',
+        'goToPrevMonth',
+        ]
+      ),
+    },
+
+    computed: {
+      ...mapGetters({
+        calenderData: 'getCalenderData',
+
+      }),
 
 
     },
     mounted() {
       let date = new Date();
-      this.date.month = date.getMonth();
-      this.date.day = date.getDate();
-      this.date.year = date.getFullYear();
-      this.formatDate = this.setFormatDate();
-      this.thisDate = {
-        day: this.date.day,
-        month: this.date.month,
-        year: this.date.year
+      let day = date.getDate();
+      let month = date.getMonth();
+      let year =date.getFullYear();
+      this.$store.state.calenderData.date={
+        day : day,
+        month: month,
+        year: year
       }
-
-
-      this.yearDaysCount = this.setYearDaysCount(date.getFullYear());
-      this.addDayOtherMonth(date.getFullYear(), date.getMonth());
+      this.$store.state.calenderData.formatDate = setFormatDate();
+      this.$store.state.calenderData.today = {
+        day : day,
+        month: month,
+        year: year
+      }
+      this.$store.state.calenderData.yearDaysCount = setYearDaysCount(date.getFullYear());
+      this.$store.commit('addDayOtherMonth', {
+        year: date.getFullYear(),
+        month: date.getMonth()
+      });
 
 
     }
-
   }
 </script>
 
@@ -296,14 +223,16 @@
     grid-template-columns: repeat(7, 1fr);
     height: 30px;
 
+
   }
 
   .date-picker .dates .day-name-list .day-name {
     display: flex;
+    padding-top:5px;
     justify-content: center;
-    align-items: center;
     color: #313131;
     border: 0.1px solid #ddd;
+    border-bottom: 0px;
   }
 
   .date-picker .dates .days .day:hover {
