@@ -19,6 +19,5 @@ export function setFormatDate() {
     month = '0' + month;
   }
   let year = d.getFullYear();
-  console.log(day + ' / ' + month + ' / ' + year);
   return day + ' / ' + month + ' / ' + year
 }

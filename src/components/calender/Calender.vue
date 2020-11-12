@@ -24,7 +24,6 @@
 
           <div :class="{
              today : i === calenderData.today.day && calenderData.date.month === calenderData.today.month && calenderData.date.year === calenderData.today.year,
-             growDiv : i === calenderData.selectedDate.day && calenderData.date.month === calenderData.selectedDate.month && calenderData.date.year === calenderData.selectedDate.year
           }"
 
                class="day"
@@ -64,7 +63,11 @@
         return Array(end - start + 1).fill().map((_, idx) => start + idx)
       },
       selectDay(day) {
-        this.$store.state.calenderData.detailStatus = true;
+        let calenderData = this.$store.state.calenderData
+        calenderData.selectedDate.day = day;
+        calenderData.selectedDate.month = calenderData.date.month;
+        calenderData.selectedDate.year = calenderData.date.year;
+        calenderData.selectedDate.format = calenderData.selectedDate.day + '.' + calenderData.selectedDate.month + '.' + calenderData.selectedDate.year;
         this.showDetail(event);
       },
       showDetail(event) {

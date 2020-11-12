@@ -3,8 +3,8 @@
     <div class="header">
       <i @click="gotToEventList" class="go-back fa fa-arrow-circle-left" aria-hidden="true"></i>
 
-     <span class="text-center">12.03.1996</span>
-      <i class=" exit-button fa fa-times-circle"></i>
+     <span class="text-center">{{selectedDate.format}}</span>
+      <i @click="exitDetail" class=" exit-button fa fa-times-circle"></i>
     </div>
     <div>
       <div class="event-inputs">
@@ -24,6 +24,7 @@
 <script>
 
   import {TimePicker, MultiSelect, Btn} from 'uiv'
+  import {mapGetters} from "vuex";
 
   export default {
     components: {
@@ -45,14 +46,20 @@
     },
     methods: {
       gotToEventList() {
-        this.$emit("goToEventList", '{true}');
+        this.$emit("goToEventList", '{false}');
       },
       exitDetail(){
-        this.$emit("exitDetail", '{true}');
+        let detail = document.getElementById("detail");
+        detail.style.display = 'none';
+        this.$store.state.calenderData.detailStatus = false;
       }
-    }
+    },
+    computed: {
+      ...mapGetters({
+        selectedDate: 'getSelectedDate',
 
-
+      }),
+  }
   }
 
 </script>
@@ -71,12 +78,15 @@
     grid-column: 1/3;
     display: grid;
     grid-template-columns: 1fr 20fr 1fr;
-    color: #f5f5f5;
-    background-color: #436f8a;
+    color: #222831;
+    background-color: #FFCE00;
     justify-content: center;
     align-items: center;
     column-gap: 10px;
-    font-size:16px;
+    font-size: 16px;
+    width: 398px;
+    border-radius: 5px;
+    border-bottom: #313131 1px solid;
 
   }
   .header .exit-button{
@@ -85,7 +95,7 @@
 
   }
   .header .exit-button:hover{
-    color:#bdbdc0;
+    color: #646464;
 
   }
   .header .go-back{
@@ -95,7 +105,7 @@
   }
 
   .header .go-back:hover{
-    color:#bdbdc0;
+    color: #646464;
   }
 
   .event-inputs {
@@ -110,6 +120,7 @@
     grid-column: 1/3;
     width: 380px;
     height: 80px;
+    resize: none;
   }
 
   .tags {
@@ -119,9 +130,14 @@
   .save-button {
     margin-top: 10px;
     width: 150px;
-    color: #f5f5f5;
-    background-color: #436f8a;
+    color: #393e46;
+    background-color: #FFCE00;
+    border :1px solid #393e46;
 
+  }
+  .save-button:hover{
+    background-color: #393e46;
+    color: #f7f7f7;
   }
 
 </style>

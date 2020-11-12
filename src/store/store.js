@@ -25,7 +25,8 @@ export const store = new Vuex.Store({
       selectedDate: {
         day: '',
         month: '',
-        year: ''
+        year: '',
+        format:''
       },
       addDiv: {
         start: '',
