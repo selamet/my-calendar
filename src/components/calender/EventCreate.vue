@@ -8,11 +8,11 @@
     </div>
     <div>
       <div class="event-inputs">
-        <input placeholder="Title..." class="form-control" type="text">
-        <time-picker v-model="time" :show-meridian="false"/>
-        <textarea placeholder="Description..." class="description form-control" name="" id=""></textarea>
-        <multi-select class="tags" v-model="selected" :options="options" collapse-selected/>
-        <btn class="save-button" size="sm">Kaydet</btn>
+        <input v-model="event.title" placeholder="Title..." class="form-control" type="text">
+        <time-picker v-model="event.time" :show-meridian="false"/>
+        <textarea v-model="event.description" placeholder="Description..." class="description form-control" name="" id=""></textarea>
+        <multi-select class="tags" v-model="event.selected" :options="options" collapse-selected/>
+        <btn @click="saveEvent()" class="save-button" size="sm">Kaydet</btn>
       </div>
     </div>
 
@@ -24,7 +24,7 @@
 <script>
 
   import {TimePicker, MultiSelect, Btn} from 'uiv'
-  import {mapGetters} from "vuex";
+  import {mapGetters, mapMutations} from "vuex";
 
   export default {
     components: {
@@ -32,9 +32,12 @@
     },
     data() {
       return {
-        time: new Date()
-        ,
-        selected: [],
+        event : {
+          time: new Date(),
+          title : '',
+          description:'',
+          selected: [],
+        },
         options: [
           {value: 1, label: 'Option1'},
           {value: 2, label: 'Option2'},
@@ -52,11 +55,20 @@
         let detail = document.getElementById("detail");
         detail.style.display = 'none';
         this.$store.state.calenderData.detailStatus = false;
-      }
+      },
+      saveEvent(){
+        this.event.time.setDate(this.selectedDate.day);
+        this.event.time.setMonth(this.selectedDate.month);
+        this.event.time.setFullYear(this.selectedDate.year);
+        this.$store.dispatch('saveEvent', this.event);
+        this.event.time = new Date();
+      },
+
     },
     computed: {
       ...mapGetters({
         selectedDate: 'getSelectedDate',
+        events: 'getEvents'
 
       }),
   }

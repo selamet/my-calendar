@@ -22,13 +22,7 @@
 
     <div class="event-list">
       <ul>
-        <li><div><a href="#"><p class="title">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus et nesciunt non nulla sequi. Autem expedita explicabo nisi quod repudiandae sed ut, voluptatum. Ad dolore ipsa minus nemo ratione reprehenderit.</p>  <span class="time">21:00</span> </a> <i class="delete-icon fa fa-minus"></i></div></li>
-        <li><div><a href="#"><p class="title">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus et nesciunt non nulla sequi. Autem expedita explicabo nisi quod repudiandae sed ut, voluptatum. Ad dolore ipsa minus nemo ratione reprehenderit.</p>  <span class="time">21:00</span> </a> <i class="delete-icon fa fa-minus"></i></div></li>
-        <li><div><a href="#"><p class="title">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus et nesciunt non nulla sequi. Autem expedita explicabo nisi quod repudiandae sed ut, voluptatum. Ad dolore ipsa minus nemo ratione reprehenderit.</p>  <span class="time">21:00</span> </a> <i class="delete-icon fa fa-minus"></i></div></li>
-        <li><div><a href="#"><p class="title">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus et nesciunt non nulla sequi. Autem expedita explicabo nisi quod repudiandae sed ut, voluptatum. Ad dolore ipsa minus nemo ratione reprehenderit.</p>  <span class="time">21:00</span> </a> <i class="delete-icon fa fa-minus"></i></div></li>
-        <li><div><a href="#"><p class="title">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus et nesciunt non nulla sequi. Autem expedita explicabo nisi quod repudiandae sed ut, voluptatum. Ad dolore ipsa minus nemo ratione reprehenderit.</p>  <span class="time">21:00</span> </a> <i class="delete-icon fa fa-minus"></i></div></li>
-        <li><div><a href="#"><p class="title">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus et nesciunt non nulla sequi. Autem expedita explicabo nisi quod repudiandae sed ut, voluptatum. Ad dolore ipsa minus nemo ratione reprehenderit.</p>  <span class="time">21:00</span> </a> <i class="delete-icon fa fa-minus"></i></div></li>
-        <li><div><a href="#"><p class="title"> eprehenderit.</p>  <span class="time">21:00</span> </a> <i class="delete-icon fa fa-minus"></i></div></li>
+        <li v-for="i in events"><div><a href="#"><p class="title">{{i.title}}</p>  <span class="time">{{i.time.getHours() + ':' + i.time.getMinutes()}}</span> </a> <i class="delete-icon fa fa-minus"></i></div></li>
 
       </ul>
 
@@ -66,6 +60,7 @@
     computed: {
       ...mapGetters({
         selectedDate: 'getSelectedDate',
+        events : 'getEvents'
 
       }),
     }

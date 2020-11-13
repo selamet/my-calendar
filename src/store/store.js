@@ -36,6 +36,7 @@ export const store = new Vuex.Store({
       formatDate: '',
       yearDaysCount: '',
     },
+    events : []
   },
   getters,
   mutations,
