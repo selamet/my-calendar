@@ -179,7 +179,7 @@
 
   .event-list li div {
     display: flex;
-    width: 320px;
+    width: 330px;
   }
 
 
@@ -209,7 +209,7 @@
     width: 300px;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 220px;
+    max-width: 216px;
 
   }
   .event-list li div .time {

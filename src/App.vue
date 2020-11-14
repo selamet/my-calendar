@@ -2,7 +2,15 @@
   <div id="app">
     <app-navigation></app-navigation>
 
-    <appCalender></appCalender>
+    <transition appear
+                mode="out-in"
+                name="custom-classes-transition"
+                enter-active-class="animate__animated animate__fadeIn animate__faster"
+                leave-active-class="animate__animated animate__fadeOut animate__faster"
+    >
+     <router-view></router-view>
+    </transition>
+
 
     <app-footer></app-footer>
   </div>
@@ -13,14 +21,15 @@
 
   import Footer from "./components/shared/Footer";
   import Navigation from "./components/shared/Navigation";
-  import Calender from './components/calender/Calender'
+  import Calender from './components/calender/Calender';
+  import Register from "./components/auths/Register";
 
 
   export default {
     components: {
       appNavigation: Navigation,
       appFooter: Footer,
-      appCalender: Calender
+      appCalender: Calender,
     },
     name: 'app',
     data() {

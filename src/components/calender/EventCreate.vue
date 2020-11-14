@@ -62,6 +62,7 @@
         this.event.time.setFullYear(this.selectedDate.year);
         this.$store.dispatch('saveEvent', this.event);
         this.event.time = new Date();
+        this.gotToEventList();
       },
 
     },
