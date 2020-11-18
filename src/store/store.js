@@ -26,7 +26,7 @@ export const store = new Vuex.Store({
         day: '',
         month: '',
         year: '',
-        format:''
+        format: ''
       },
       addDiv: {
         start: '',
@@ -36,12 +36,16 @@ export const store = new Vuex.Store({
       formatDate: '',
       yearDaysCount: '',
     },
-    events : []
+    events: [],
+    auths: {
+      token: "",
+      fbAPIKey: "AIzaSyAu8AYeTxHa1m66DfyMneVvL9aI5wKMZtE",
+
+    }
   },
   getters,
   mutations,
   actions,
   modules: {},
 
-
-  })
+})

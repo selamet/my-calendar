@@ -19,7 +19,7 @@ export const goToNextMonth = (state) => {
     data.yearDaysCount = setYearDaysCount(data.date.year);
 
   }
-  this.addDayOtherMonth(state,{year:data.date.year,month: data.date.month});
+  this.addDayOtherMonth(state, {year: data.date.year, month: data.date.month});
 };
 
 export const goToPrevMonth = (state) => {
@@ -30,14 +30,19 @@ export const goToPrevMonth = (state) => {
     data.date.year--;
     data.yearDaysCount = setYearDaysCount(data.date.year);
   }
-  this.addDayOtherMonth(state,{year:data.date.year,month: data.date.month});
+  this.addDayOtherMonth(state, {year: data.date.year, month: data.date.month});
 };
 
 export const SAVE_EVENT = (state, payload) => {
   state.events.push(payload);
 };
 
+export const SET_TOKEN = (state, token) => {
+  state.auths.token = token;
+}
 
-
+export const CLEAR_TOKEN = (state) => {
+  state.auths.token = "";
+}
 
 

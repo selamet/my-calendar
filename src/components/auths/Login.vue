@@ -1,17 +1,20 @@
 <template>
   <div>
-  <h2>Login</h2>
+
     <div class="register-page">
+      <div class="header">
+        <h2>Login</h2>
+      </div>
       <div class="register-form">
-        <form>
+        <form @submit.prevent="onSubmit">
           <div class="container">
 
 
             <label for="email"><b>Email</b></label>
-            <input type="text" placeholder="Enter Email" name="email" id="email" required>
+            <input v-model="user.email" type="text" placeholder="Enter Email" name="email" id="email" required>
 
             <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+            <input v-model="user.password" type="password" placeholder="Enter Password" name="psw" id="psw" required>
 
 
             <hr>
@@ -21,7 +24,10 @@
           </div>
 
           <div class="container sign-in">
-            <p>If you don't have an account, <router-link to="/register">Create One</router-link>.</p>
+            <p>If you don't have an account,
+              <router-link to="/register">Create One</router-link>
+              .
+            </p>
           </div>
         </form>
       </div>
@@ -31,10 +37,28 @@
 </template>
 
 <script>
-  export default {}
+  export default {
+    data() {
+      return {
+        user: {
+          email: null,
+          password: null,
+        },
+        isUser: true
+      }
+    },
+    methods: {
+      onSubmit() {
+        this.$store.dispatch("login", {...this.user, isUser: this.isUser})
+          .then(response => {
+            this.$router.push("/");
+          })
+      }
+    }
+  }
 </script>
 
-<style>
+<style scoped>
 
 
   * {
@@ -42,20 +66,16 @@
     font-family: Arial, Helvetica, sans-serif;
 
   }
+
   h2 {
-    margin-top: 90px;
+    margin-bottom: 100px;
     color: #313131;
     font-size: 48px;
     font-weight: 900;
-    text-align: center;
-    position: absolute;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
   }
 
-  .forgot-password{
+
+  .forgot-password {
     color: #313131;
     text-decoration: underline;
   }
@@ -65,6 +85,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
   }
 
   .container {

@@ -8,7 +8,7 @@
                 enter-active-class="animate__animated animate__fadeIn animate__faster"
                 leave-active-class="animate__animated animate__fadeOut animate__faster"
     >
-     <router-view></router-view>
+      <router-view></router-view>
     </transition>
 
 
@@ -37,7 +37,10 @@
         msg: '',
       }
     },
-    methods: {}
+    methods: {},
+    created() {
+      this.$store.dispatch("initAuth")
+    }
   }
 </script>
 
@@ -52,8 +55,6 @@
     background-color: #FFCE00;
     font-family: 'Saira', Arial, Helvetica, sans-serif;
   }
-
-
 
 
 </style>

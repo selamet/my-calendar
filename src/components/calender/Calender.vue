@@ -1,6 +1,6 @@
 <template>
   <div class="calender">
-    <h1><span> MY</span> CALENDER </h1>
+      <h1><span> MY</span> CALENDER  <span @click.prevent="logout">Logout</span></h1>
     <div class="date-picker">
       <div class="month">
         <div @click="goToPrevMonth()" class="arrows prev-mth">&lt;</div>
@@ -51,7 +51,7 @@
 
   import Detail from './Detail'
   import {mapGetters, mapMutations} from "vuex";
-  import {setYearDaysCount,setFormatDate} from "../../set_values";
+  import {setYearDaysCount, setFormatDate} from "../../set_values";
 
   export default {
 
@@ -61,6 +61,9 @@
     methods: {
       range: function (start, end) {
         return Array(end - start + 1).fill().map((_, idx) => start + idx)
+      },
+      logout(){
+        this.$store.dispatch('logout');
       },
       selectDay(day) {
         let calenderData = this.$store.state.calenderData
@@ -81,8 +84,8 @@
       },
 
       ...mapMutations([
-        'goToNextMonth',
-        'goToPrevMonth',
+          'goToNextMonth',
+          'goToPrevMonth',
         ]
       ),
     },
@@ -99,15 +102,15 @@
       let date = new Date();
       let day = date.getDate();
       let month = date.getMonth();
-      let year =date.getFullYear();
-      this.$store.state.calenderData.date={
-        day : day,
+      let year = date.getFullYear();
+      this.$store.state.calenderData.date = {
+        day: day,
         month: month,
         year: year
       }
       this.$store.state.calenderData.formatDate = setFormatDate();
       this.$store.state.calenderData.today = {
-        day : day,
+        day: day,
         month: month,
         year: year
       }
@@ -135,6 +138,7 @@
   h1 span {
     font-weight: 300;
   }
+
 
   .date-picker {
     position: relative;
@@ -231,7 +235,7 @@
 
   .date-picker .dates .day-name-list .day-name {
     display: flex;
-    padding-top:5px;
+    padding-top: 5px;
     justify-content: center;
     color: #313131;
     border: 0.1px solid #ddd;

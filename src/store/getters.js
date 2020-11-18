@@ -9,3 +9,8 @@ export const getSelectedDate = (state) => {
 export const getEvents = (state) => {
   return state.events
 };
+
+export const isAuthenticated = (state) => {
+  return state.auths.token !== ""
+
+}
