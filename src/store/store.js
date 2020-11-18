@@ -39,7 +39,6 @@ export const store = new Vuex.Store({
     events: [],
     auths: {
       token: "",
-      fbAPIKey: "AIzaSyAu8AYeTxHa1m66DfyMneVvL9aI5wKMZtE",
 
     }
   },

@@ -10,6 +10,7 @@ export const initAuth = ({commit, dispatch}) => {
 
     let expirationDate = localStorage.getItem("expirationDate");
     let time = new Date().getTime();
+    console.log('time:',time, ' expirationDate: ',expirationDate);
 
     if (time > +expirationDate) {
       console.log('Token süresi geçmiş');
@@ -45,13 +46,10 @@ export const login = ({commit, dispatch, state}, authData) => {
     loginLink,
     {username: authData.email, password: authData.password}, config
   ).then(response => {
-    debugger;
-    commit('SET_TOKEN', response.data.idToken);
-    localStorage.setItem("token", response.data.idToken);
-    //localStorage.setItem("expirationDate", new Date().getTime() + +response.data.expiresIn * 1000);
-    localStorage.setItem("expirationDate", new Date().getTime() + 5000);
-    //dispatch('setTimeoutTimer', +response.data.expiresIn);
-    dispatch('setTimeoutTimer', 5000);
+    commit('SET_TOKEN', response.data.access);
+    localStorage.setItem("token", response.data.access);
+    localStorage.setItem("expirationDate", new Date().getTime() + 86400000);
+    dispatch('setTimeoutTimer', 86400000);
   })
 
 }
@@ -68,13 +66,10 @@ export const register = ({commit, dispatch, state}, authData) => {
     registerLink,
     {email: authData.email, password: authData.password}, config
   ).then(response => {
-    debugger;
-    commit('SET_TOKEN', response.data.idToken);
-    localStorage.setItem("token", response.data.idToken);
-    //localStorage.setItem("expirationDate", new Date().getTime() + +response.data.expiresIn * 1000);
-    localStorage.setItem("expirationDate", new Date().getTime() + 5000);
-    //dispatch('setTimeoutTimer', +response.data.expiresIn);
-    dispatch('setTimeoutTimer', 5000);
+    commit('SET_TOKEN', response.data.access);
+    localStorage.setItem("token", response.data.access);
+    localStorage.setItem("expirationDate", new Date().getTime() + 86400000) ;
+    dispatch('setTimeoutTimer', 86400000);
   })
 
 }
