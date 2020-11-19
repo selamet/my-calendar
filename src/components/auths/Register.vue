@@ -50,12 +50,14 @@
     },
     methods: {
       onSubmit() {
-        if (this.user.password !== this.user.passwordConfirm){
+        if (this.user.password !== this.user.passwordConfirm) {
           alert('Something is wrong');
-        }else{
-          this.$store.dispatch("register", { ...this.user, isUser : this.isUser  })
-          .then(response => {
-
+        } else {
+          this.$store.dispatch("register", {...this.user, isUser: this.isUser})
+            .then(response => {
+              this.$router.push("/");
+            }).catch(er => {
+              alert('Something is wrong');
           })
         }
 
@@ -80,7 +82,7 @@
     font-weight: 900;
   }
 
-  .login-logout{
+  .login-logout {
     float: right;
     margin: 20px 20px 0 0;
     font-size: 32px;

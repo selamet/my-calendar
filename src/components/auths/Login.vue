@@ -52,7 +52,9 @@
         this.$store.dispatch("login", {...this.user, isUser: this.isUser})
           .then(response => {
             this.$router.push("/");
-          })
+          }).catch(er=>{
+            alert('Something is wrong');
+        })
       }
     }
   }
