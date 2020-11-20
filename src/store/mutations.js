@@ -45,4 +45,8 @@ export const CLEAR_TOKEN = (state) => {
   state.auths.token = "";
 }
 
+export const GET_EVENTS = (state, payload) => {
+  state.events = payload;
+}
+
 

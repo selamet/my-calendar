@@ -10,7 +10,7 @@ export const initAuth = ({commit, dispatch}) => {
 
     let expirationDate = localStorage.getItem("expirationDate");
     let time = new Date().getTime();
-    console.log('time:',time, ' expirationDate: ',expirationDate);
+    console.log('time:', time, ' expirationDate: ', expirationDate);
 
     if (time > +expirationDate) {
       console.log('Token süresi geçmiş');
@@ -68,7 +68,7 @@ export const register = ({commit, dispatch, state}, authData) => {
   ).then(response => {
     commit('SET_TOKEN', response.data.access);
     localStorage.setItem("token", response.data.access);
-    localStorage.setItem("expirationDate", new Date().getTime() + 86400000) ;
+    localStorage.setItem("expirationDate", new Date().getTime() + 86400000);
     dispatch('setTimeoutTimer', 86400000);
   })
 
@@ -86,5 +86,23 @@ export const setTimeoutTimer = ({dispatch}, expiresIn) => {
   setTimeout(() => {
     dispatch("logout");
   }, expiresIn)
+}
+
+
+export const callEvents = ({commit, dispatch, state}, authData) => {
+  let link = "http://localhost:8000/api/event"
+  let config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${state.auths.token}`
+    }
+  }
+
+  return axios.get(
+    link, config
+  ).then(response => {
+    commit('GET_EVENTS', response.data);
+  })
+
 }
 

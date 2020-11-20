@@ -22,7 +22,7 @@
 
     <div class="event-list">
       <ul>
-        <li v-for="i in events"><div><a href="#"><p class="title">{{i.title}}</p>  <span class="time">{{i.time.getHours() + ':' + i.time.getMinutes()}}</span> </a> <i class="delete-icon fa fa-minus"></i></div></li>
+        <li v-for="i in events" v-if="selectedDate.day === i.date.day"><div><a href="#"><p class="title">{{i.title}}</p>  <span class="time">{{i.date.hour + ':' + i.date.minute}}</span> </a> <i class="delete-icon fa fa-minus"></i></div></li>
 
       </ul>
 

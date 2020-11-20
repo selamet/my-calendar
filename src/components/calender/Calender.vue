@@ -120,6 +120,8 @@
         month: date.getMonth()
       });
 
+      this.$store.dispatch('callEvents');
+
 
     }
   }
