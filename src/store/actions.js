@@ -28,9 +28,24 @@ export const initAuth = ({commit, dispatch}) => {
   }
 }
 
-export const saveEvent = ({state, commit}, payload) => {
-  commit('SAVE_EVENT', payload)
+export const createEvent = ({state, commit}, payload) => {
+  let link = "http://localhost:8000/api/event/"
+  let config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${state.auths.token}`
+    }
+  }
+  let data = payload;
+  let date = data.date.getFullYear() + '-' + data.date.getMonth() + '-' + data.date.getDate() + ' ' + data.date.getHours() + ':' + data.date.getMinutes();
+  data.date = date;
+  data.flag = data.flag[0] ? data.flag[0] : 0;
+  return axios.post(
+    link, data, config
+  ).then(response => {
+    commit('EVENT_CREATE', response.data)
 
+  })
 }
 
 

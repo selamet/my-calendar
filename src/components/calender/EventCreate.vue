@@ -9,10 +9,10 @@
     <div>
       <div class="event-inputs">
         <input v-model="event.title" placeholder="Title..." class="form-control" type="text">
-        <time-picker v-model="event.time" :show-meridian="false"/>
-        <textarea v-model="event.description" placeholder="Description..." class="description form-control" name="" id=""></textarea>
-        <multi-select class="tags" v-model="event.selected" :options="options" collapse-selected/>
-        <btn @click="saveEvent()" class="save-button" size="sm">Kaydet</btn>
+        <time-picker v-model="event.date" :show-meridian="false"/>
+        <textarea v-model="event.content" placeholder="Description..." class="description form-control" name="" id=""></textarea>
+        <multi-select class="tags" v-model="event.flag" :options="options" collapse-selected/>
+        <btn @click="createEvent()" class="save-button" size="sm">Kaydet</btn>
       </div>
     </div>
 
@@ -33,17 +33,16 @@
     data() {
       return {
         event : {
-          time: new Date(),
+          date: new Date(),
           title : '',
-          description:'',
-          selected: [],
+          content:'',
+          flag: [],
         },
         options: [
-          {value: 1, label: 'Option1'},
-          {value: 2, label: 'Option2'},
-          {value: 3, label: 'Option3'},
-          {value: 4, label: 'Option4'},
-          {value: 5, label: 'Option5'}
+          {value: 1, label: 'Yellow'},
+          {value: 2, label: 'Green'},
+          {value: 3, label: 'Blue'},
+          {value: 4, label: 'Red'},
         ],
       }
     },
@@ -56,12 +55,12 @@
         detail.style.display = 'none';
         this.$store.state.calenderData.detailStatus = false;
       },
-      saveEvent(){
-        this.event.time.setDate(this.selectedDate.day);
-        this.event.time.setMonth(this.selectedDate.month);
-        this.event.time.setFullYear(this.selectedDate.year);
-        this.$store.dispatch('saveEvent', this.event);
-        this.event.time = new Date();
+      createEvent(){
+        this.event.date.setDate(this.selectedDate.day);
+        this.event.date.setMonth(this.selectedDate.month);
+        this.event.date.setFullYear(this.selectedDate.year);
+        this.$store.dispatch('createEvent', this.event);
+        this.event.date = new Date();
         this.gotToEventList();
       },
 

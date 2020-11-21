@@ -68,7 +68,7 @@
       selectDay(day) {
         let calenderData = this.$store.state.calenderData
         calenderData.selectedDate.day = day;
-        calenderData.selectedDate.month = calenderData.date.month;
+        calenderData.selectedDate.month = calenderData.date.month+1;
         calenderData.selectedDate.year = calenderData.date.year;
         calenderData.selectedDate.format = calenderData.selectedDate.day + '.' + calenderData.selectedDate.month + '.' + calenderData.selectedDate.year;
         this.showDetail(event);

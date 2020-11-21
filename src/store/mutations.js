@@ -33,7 +33,7 @@ export const goToPrevMonth = (state) => {
   this.addDayOtherMonth(state, {year: data.date.year, month: data.date.month});
 };
 
-export const SAVE_EVENT = (state, payload) => {
+export const EVENT_CREATE = (state, payload) => {
   state.events.push(payload);
 };
 
