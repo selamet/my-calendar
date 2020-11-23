@@ -19,6 +19,10 @@ export const goToNextMonth = (state) => {
     data.yearDaysCount = setYearDaysCount(data.date.year);
 
   }
+  let params_from = data.date.year + '-' + data.date.month + '-' + data.date.day;
+  let params_to = data.date.year + '-' + data.date.month + '-' + data.yearDaysCount[data.date.month]
+  let payload = {'from': params_from, 'to': params_to}
+
   this.addDayOtherMonth(state, {year: data.date.year, month: data.date.month});
 };
 

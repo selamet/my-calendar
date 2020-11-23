@@ -5,7 +5,7 @@
       <div class="month">
         <div @click="goToPrevMonth()" class="arrows prev-mth">&lt;</div>
         <div class="mth"> {{calenderData.months[calenderData.date.month]}} {{calenderData.date.year}}</div>
-        <div @click="goToNextMonth()" class="arrows next-mth">&gt;</div>
+        <div @click="goToNextMonth(calenderData)" class="arrows next-mth">&gt;</div>
       </div>
       <div class="dates">
         <div>
@@ -21,7 +21,7 @@
           <div class="day day-other"
                v-for="i in range(calenderData.yearDaysCount[calenderData.date.month]-calenderData.addDiv.start+1,calenderData.yearDaysCount[calenderData.date.month])">
             <div class="events">
-            
+
 
             </div>
             <span class="day-no">{{i}}</span>
@@ -103,9 +103,33 @@
         detail.style.left = x - 300 + 'px';
         detail.style.top = y - 250 + 'px';
       },
+      goToNextMonth(calenderData) {
+        let data = calenderData;
+        data.date.month++;
+        if (data.date.month > 11) {
+          data.date.month = 0;
+          data.date.year++;
+          data.yearDaysCount = setYearDaysCount(data.date.year);
+
+        }
+        let params_from = data.date.year + '-' + (data.date.month + 1) + '-' + '1';
+        let params_to = data.date.year + '-' + (data.date.month + 1) + '-' + data.yearDaysCount[data.date.month]
+        let params = {'from': params_from, 'to': params_to}
+        this.$store.dispatch('callEvents', params);
+
+        this.addDayOtherMonth(this.$store.state, {year: data.date.year, month: data.date.month});
+
+      },
+      addDayOtherMonth(state, payload) {
+        let start = new Date(payload.year, payload.month, 0);
+        let calenderData = state.calenderData;
+        calenderData.addDiv.start = start.getDay();
+        calenderData.addDiv.end = 42 - (calenderData.yearDaysCount[payload.month] + start.getDay());
+
+      },
+
 
       ...mapMutations([
-          'goToNextMonth',
           'goToPrevMonth',
         ]
       ),

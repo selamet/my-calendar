@@ -106,8 +106,12 @@ export const setTimeoutTimer = ({dispatch}, expiresIn) => {
 }
 
 
-export const callEvents = ({commit, dispatch, state}, authData) => {
+export const callEvents = ({commit, dispatch, state}, params) => {
   let link = "http://localhost:8000/api/event"
+  if (params) {
+    link += '?from=' + params.from + '&to=' + params.to;
+    
+  }
   let config = {
     headers: {
       'Content-Type': 'application/json',
