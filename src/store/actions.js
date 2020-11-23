@@ -37,7 +37,9 @@ export const createEvent = ({state, commit}, payload) => {
     }
   }
   let data = payload;
-  let date = data.date.getFullYear() + '-' + data.date.getMonth() + '-' + data.date.getDate() + ' ' + data.date.getHours() + ':' + data.date.getMinutes();
+  let month = data.date.getMonth() === 0 ? 12 : data.date.getMonth();
+
+  let date = data.date.getFullYear() + '-' + month + '-' + data.date.getDate() + ' ' + data.date.getHours() + ':' + data.date.getMinutes();
   data.date = date;
   data.flag = data.flag[0] ? data.flag[0] : 0;
   return axios.post(

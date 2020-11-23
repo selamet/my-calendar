@@ -3,14 +3,15 @@
     <div class="header">
       <i @click="gotToEventList" class="go-back fa fa-arrow-circle-left" aria-hidden="true"></i>
 
-     <span class="text-center">{{selectedDate.format}}</span>
+      <span class="text-center">{{selectedDate.format}}</span>
       <i @click="exitDetail" class=" exit-button fa fa-times-circle"></i>
     </div>
     <div>
       <div class="event-inputs">
         <input v-model="event.title" placeholder="Title..." class="form-control" type="text">
         <time-picker v-model="event.date" :show-meridian="false"/>
-        <textarea v-model="event.content" placeholder="Description..." class="description form-control" name="" id=""></textarea>
+        <textarea v-model="event.content" placeholder="Description..." class="description form-control" name=""
+                  id=""></textarea>
         <multi-select class="tags" v-model="event.flag" :options="options" collapse-selected/>
         <btn @click="createEvent()" class="save-button" size="sm">Kaydet</btn>
       </div>
@@ -32,10 +33,10 @@
     },
     data() {
       return {
-        event : {
+        event: {
           date: new Date(),
-          title : '',
-          content:'',
+          title: '',
+          content: '',
           flag: [],
         },
         options: [
@@ -50,12 +51,12 @@
       gotToEventList() {
         this.$emit("goToEventList", '{false}');
       },
-      exitDetail(){
+      exitDetail() {
         let detail = document.getElementById("detail");
         detail.style.display = 'none';
         this.$store.state.calenderData.detailStatus = false;
       },
-      createEvent(){
+      createEvent() {
         this.event.date.setDate(this.selectedDate.day);
         this.event.date.setMonth(this.selectedDate.month);
         this.event.date.setFullYear(this.selectedDate.year);
@@ -71,7 +72,8 @@
         events: 'getEvents'
 
       }),
-  }
+    },
+
   }
 
 </script>
@@ -101,22 +103,25 @@
     border-bottom: #313131 1px solid;
 
   }
-  .header .exit-button{
-    justify-content:end;
-    cursor:pointer;
+
+  .header .exit-button {
+    justify-content: end;
+    cursor: pointer;
 
   }
-  .header .exit-button:hover{
+
+  .header .exit-button:hover {
     color: #646464;
 
   }
-  .header .go-back{
-    justify-content:start;
+
+  .header .go-back {
+    justify-content: start;
     margin-left: 4px;
-    cursor:pointer;
+    cursor: pointer;
   }
 
-  .header .go-back:hover{
+  .header .go-back:hover {
     color: #646464;
   }
 
@@ -144,10 +149,11 @@
     width: 150px;
     color: #393e46;
     background-color: #FFCE00;
-    border :1px solid #393e46;
+    border: 1px solid #393e46;
 
   }
-  .save-button:hover{
+
+  .save-button:hover {
     background-color: #393e46;
     color: #f7f7f7;
   }

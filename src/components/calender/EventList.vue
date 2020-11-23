@@ -22,13 +22,17 @@
 
     <div class="event-list">
       <ul>
-        <li v-for="i in events" v-if="selectedDate.day === i.date.day"><div><a href="#"><p class="title">{{i.title}}</p>  <span class="time">{{i.date.hour + ':' + i.date.minute}}</span> </a> <i class="delete-icon fa fa-minus"></i></div></li>
+        <li v-for="i in events"
+            v-if="selectedDate.day === i.date.day && selectedDate.month === i.date.month && i.date.year === selectedDate.year">
+          <div><a href="#"><p class="title">{{i.title}}</p>  <span
+            class="time">{{i.date.hour + ':' + i.date.minute}}</span> </a> <i class="delete-icon fa fa-minus"></i></div>
+        </li>
       </ul>
 
     </div>
     <div class="create-event">
       <p style="text-align: center">
-      <btn class="create-event-button" size="sm">Oluştur</btn>
+        <btn class="create-event-button" size="sm">Oluştur</btn>
       </p>
     </div>
 
@@ -50,7 +54,7 @@
       goToEventCreate() {
         this.$emit("goToEventCreate", '{true}');
       },
-      exitDetail(){
+      exitDetail() {
         let detail = document.getElementById("detail");
         detail.style.display = 'none';
         this.$store.state.calenderData.detailStatus = false;
@@ -59,7 +63,7 @@
     computed: {
       ...mapGetters({
         selectedDate: 'getSelectedDate',
-        events : 'getEvents'
+        events: 'getEvents'
 
       }),
     }
@@ -117,56 +121,62 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  .filter .title{
+  .filter .title {
     margin: 6px 5px;
     font-family: "sans-serif";
-    font-size:14px ;
+    font-size: 14px;
 
   }
 
-  .filter .priority{
+  .filter .priority {
     margin-right: 5px;
   }
-  .filter .priority .colors{
+
+  .filter .priority .colors {
     height: 14px;
     width: 14px;
     margin: 8px 2px;
-    border-radius:50%;
+    border-radius: 50%;
     grid-auto-flow: column;
-    float:right;
+    float: right;
     border: 1px solid #313131;
   }
-  .filter .priority .colors:hover{
+
+  .filter .priority .colors:hover {
     border: 2px solid #313131;
     cursor: pointer;
 
   }
-  .event-list{
+
+  .event-list {
     height: 160px;
   }
-  .create-event-button{
+
+  .create-event-button {
     margin-top: 10px;
     width: 150px;
     color: #393e46;
     background-color: #FFCE00;
-    border :1px solid #393e46;
+    border: 1px solid #393e46;
 
   }
-  .create-event-button:hover{
+
+  .create-event-button:hover {
     background-color: #393e46;
     color: #f7f7f7;
   }
 
 
-  .event-list{
+  .event-list {
     margin: 0px 30px;
   }
+
   .event-list ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     height: 150px;
-    overflow-y:auto;
+    overflow-y: auto;
 
   }
 
@@ -196,13 +206,16 @@
     transition: font-size 0.3s ease, background-color 0.3s ease;
     display: flex;
   }
+
   .event-list ul::-webkit-scrollbar {
     display: none;
   }
+
   .event-list li a:hover {
     font-size: 20px;
     background: #f6f6f6;
   }
+
   .event-list li div .title {
     white-space: nowrap;
     width: 300px;
@@ -211,10 +224,12 @@
     max-width: 216px;
 
   }
+
   .event-list li div .time {
     width: 50px;
     margin: 0 10px 0 20px;
   }
+
   .event-list li div .delete-icon {
     margin: 6px 0 0 30px;
     justify-content: end;
@@ -222,7 +237,6 @@
     color: #000;
 
   }
-
 
 
 </style>

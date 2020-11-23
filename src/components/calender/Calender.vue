@@ -1,6 +1,6 @@
 <template>
   <div class="calender">
-      <h1><span> MY</span> CALENDER  <span @click.prevent="logout">Logout</span></h1>
+    <h1><span> MY</span> CALENDER <span @click.prevent="logout">Logout</span></h1>
     <div class="date-picker">
       <div class="month">
         <div @click="goToPrevMonth()" class="arrows prev-mth">&lt;</div>
@@ -31,6 +31,15 @@
                @click="selectDay(i)"
           >
 
+            <div class="events">
+              <div v-for="event in events"
+                   v-if="event.date.day === i && calenderData.date.month === event.date.month-1 && calenderData.date.year === event.date.year"
+                   class="tags">
+                {{event.date.hour}}:{{event.date.minute}}
+              </div>
+
+
+            </div>
             <span class="day-no">{{i}}</span>
 
           </div>
@@ -62,13 +71,13 @@
       range: function (start, end) {
         return Array(end - start + 1).fill().map((_, idx) => start + idx)
       },
-      logout(){
+      logout() {
         this.$store.dispatch('logout');
       },
       selectDay(day) {
         let calenderData = this.$store.state.calenderData
         calenderData.selectedDate.day = day;
-        calenderData.selectedDate.month = calenderData.date.month+1;
+        calenderData.selectedDate.month = calenderData.date.month + 1;
         calenderData.selectedDate.year = calenderData.date.year;
         calenderData.selectedDate.format = calenderData.selectedDate.day + '.' + calenderData.selectedDate.month + '.' + calenderData.selectedDate.year;
         this.showDetail(event);
@@ -93,6 +102,7 @@
     computed: {
       ...mapGetters({
         calenderData: 'getCalenderData',
+        events: 'getEvents'
 
       }),
 
@@ -198,32 +208,57 @@
   }
 
   .date-picker .dates .days .day {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr 1fr 1fr 1fr);
-    grid-template-rows: repeat(10, [row] auto);
-    justify-content: center;
-    align-items: center;
+
     color: #313131;
     border: 0.1px solid #ddd;
+    display: flex;
+    flex-direction: column;
 
+  }
+
+
+  .date-picker .dates .days .day .events {
+    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .date-picker .dates .days .day .events .tags {
+    height: 20px;
+    margin: 5px;
+    flex-wrap: wrap;
+    width: 40%;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid #313131;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .date-picker .dates .days .day .events .tags:hover {
+    background-color: #cccccc;
+    cursor: pointer;
   }
 
 
   .date-picker .dates .days .day .day-no {
     margin-right: 4px;
-    grid-column: col 3 / span 1;
-    grid-row: row 10 / span 1;
+
     font-size: 14px;
     font-family: 'Muli', sans-serif;
     color: #20232a;
     line-height: 24px;
-
+    flex-basis: 20px;
+    margin-left: auto;
+    border-top: 1px solid #cccccc;
 
   }
 
   .date-picker .dates .days .day-other .day-no {
     color: #bdbdc0;
-
   }
 
 
