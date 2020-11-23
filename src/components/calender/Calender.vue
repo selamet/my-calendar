@@ -13,14 +13,20 @@
         </div>
 
         <div class="day-name-list">
-          <div class="day-name" v-for="i in calenderData.days"><p>{{i}}</p></div>
+          <div class="day-name" v-for="i in calenderData.days"><span>{{i}}</span></div>
 
         </div>
 
         <div class="days">
           <div class="day day-other"
-               v-for="i in range(calenderData.yearDaysCount[calenderData.date.month]-calenderData.addDiv.start+1,calenderData.yearDaysCount[calenderData.date.month])"><span
-            class="day-no">{{i}}</span></div>
+               v-for="i in range(calenderData.yearDaysCount[calenderData.date.month]-calenderData.addDiv.start+1,calenderData.yearDaysCount[calenderData.date.month])">
+            <div class="events">
+            
+
+            </div>
+            <span class="day-no">{{i}}</span>
+
+          </div>
 
           <div :class="{
              today : i === calenderData.today.day && calenderData.date.month === calenderData.today.month && calenderData.date.year === calenderData.today.year,
@@ -43,8 +49,14 @@
             <span class="day-no">{{i}}</span>
 
           </div>
-          <div class="day day-other" v-for="i in calenderData.addDiv.end"><span class="day-no">{{i}}</span></div>
+          <div class="day day-other" v-for="i in calenderData.addDiv.end">
+            <div class="events">
 
+            </div>
+
+
+            <span class="day-no">{{i}}</span>
+          </div>
         </div>
 
 
@@ -155,13 +167,12 @@
   .date-picker {
     position: relative;
     width: 80%;
-    height: 60px;
+    height: 6vh;
     background-color: #fff;
     margin: 20px auto;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
     user-select: none;
     display: grid;
-
 
   }
 
@@ -171,6 +182,7 @@
     top: 100%;
     left: 0;
     right: 0;
+    height: 70vh;
     background-color: #fff;
   }
 
@@ -204,7 +216,7 @@
   .date-picker .dates .days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    height: 580px;
+    height: 66vh;
   }
 
   .date-picker .dates .days .day {
@@ -213,7 +225,8 @@
     border: 0.1px solid #ddd;
     display: flex;
     flex-direction: column;
-
+    max-height: 11vh;
+    min-height: 11vh;
   }
 
 
@@ -222,31 +235,38 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    align-items: center;
-    justify-content: center;
+    overflow-y: scroll;
+    justify-content: space-between;
+    padding: 5px;
   }
 
   .date-picker .dates .days .day .events .tags {
-    height: 20px;
-    margin: 5px;
+    height: 2.3vh;
+    margin: 3px;
     flex-wrap: wrap;
     width: 40%;
     justify-content: space-around;
-    align-items: center;
     border: 1px solid #313131;
-    border-radius: 10px;
+    border-radius: 2px;
     text-align: center;
+    background-color: antiquewhite;
+    font-size: 0.9vw;
   }
 
+  .date-picker .dates .days .day .events::-webkit-scrollbar {
+    display: none;
+
+  }
+
+
   .date-picker .dates .days .day .events .tags:hover {
-    background-color: #cccccc;
+    background-color: #f2f2f2;
     cursor: pointer;
   }
 
 
   .date-picker .dates .days .day .day-no {
     margin-right: 4px;
-
     font-size: 14px;
     font-family: 'Muli', sans-serif;
     color: #20232a;
@@ -259,25 +279,32 @@
 
   .date-picker .dates .days .day-other .day-no {
     color: #bdbdc0;
+    margin-right: 4px;
+    font-size: 14px;
+    font-family: 'Muli', sans-serif;
+    line-height: 24px;
+    flex-basis: 20px;
+    margin-left: auto;
+    border-top: 1px solid #cccccc;
+
   }
 
 
   .date-picker .dates .day-name-list {
     display: grid;
+    height: 4vh;
     grid-template-columns: repeat(7, 1fr);
-    height: 30px;
-
-
   }
 
   .date-picker .dates .day-name-list .day-name {
-    display: flex;
-    padding-top: 5px;
-    justify-content: center;
     color: #313131;
     border: 0.1px solid #ddd;
     border-bottom: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
+
 
   .date-picker .dates .days .day:hover {
     background-color: #f3f3f3;
