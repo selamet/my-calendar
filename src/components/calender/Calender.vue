@@ -3,7 +3,7 @@
     <h1><span> MY</span> CALENDER <span @click.prevent="logout">Logout</span></h1>
     <div class="date-picker">
       <div class="month">
-        <div @click="goToPrevMonth()" class="arrows prev-mth">&lt;</div>
+        <div @click="goToPrevMonth(calenderData)" class="arrows prev-mth">&lt;</div>
         <div class="mth"> {{calenderData.months[calenderData.date.month]}} {{calenderData.date.year}}</div>
         <div @click="goToNextMonth(calenderData)" class="arrows next-mth">&gt;</div>
       </div>
@@ -128,11 +128,22 @@
 
       },
 
+      goToPrevMonth(calenderData) {
+        let data = calenderData;
+        data.date.month--;
+        if (data.date.month < 0) {
+          data.date.month = 11;
+          data.date.year--;
+          data.yearDaysCount = setYearDaysCount(data.date.year);
+        }
+        let params_from = data.date.year + '-' + (data.date.month + 1) + '-' + '1';
+        let params_to = data.date.year + '-' + (data.date.month + 1) + '-' + data.yearDaysCount[data.date.month]
+        let params = {'from': params_from, 'to': params_to}
+        this.$store.dispatch('callEvents', params);
+        this.addDayOtherMonth(this.$store.state, {year: data.date.year, month: data.date.month});
 
-      ...mapMutations([
-          'goToPrevMonth',
-        ]
-      ),
+      },
+
     },
 
     computed: {

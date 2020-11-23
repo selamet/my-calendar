@@ -110,7 +110,6 @@ export const callEvents = ({commit, dispatch, state}, params) => {
   let link = "http://localhost:8000/api/event"
   if (params) {
     link += '?from=' + params.from + '&to=' + params.to;
-    
   }
   let config = {
     headers: {

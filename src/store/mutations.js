@@ -9,33 +9,6 @@ export const addDayOtherMonth = (state, payload) => {
 };
 
 
-export const goToNextMonth = (state) => {
-
-  let data = state.calenderData;
-  data.date.month++;
-  if (data.date.month > 11) {
-    data.date.month = 0;
-    data.date.year++;
-    data.yearDaysCount = setYearDaysCount(data.date.year);
-
-  }
-  let params_from = data.date.year + '-' + data.date.month + '-' + data.date.day;
-  let params_to = data.date.year + '-' + data.date.month + '-' + data.yearDaysCount[data.date.month]
-  let payload = {'from': params_from, 'to': params_to}
-
-  this.addDayOtherMonth(state, {year: data.date.year, month: data.date.month});
-};
-
-export const goToPrevMonth = (state) => {
-  let data = state.calenderData;
-  data.date.month--;
-  if (data.date.month < 0) {
-    data.date.month = 11;
-    data.date.year--;
-    data.yearDaysCount = setYearDaysCount(data.date.year);
-  }
-  this.addDayOtherMonth(state, {year: data.date.year, month: data.date.month});
-};
 
 export const EVENT_CREATE = (state, payload) => {
   state.events.push(payload);
