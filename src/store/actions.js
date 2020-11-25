@@ -36,14 +36,8 @@ export const createEvent = ({state, commit}, payload) => {
       'Authorization': `Bearer ${state.auths.token}`
     }
   }
-  let data = payload;
-  let month = data.date.getMonth() === 0 ? 12 : data.date.getMonth();
-
-  let date = data.date.getFullYear() + '-' + month + '-' + data.date.getDate() + ' ' + data.date.getHours() + ':' + data.date.getMinutes();
-  data.date = date;
-  data.flag = data.flag[0] ? data.flag[0] : 0;
   return axios.post(
-    link, data, config
+    link, payload, config
   ).then(response => {
     commit('EVENT_CREATE', response.data)
 

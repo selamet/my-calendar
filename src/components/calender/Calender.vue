@@ -113,7 +113,10 @@
 
         }
         let params_from = data.date.year + '-' + (data.date.month + 1) + '-' + '1';
-        let params_to = data.date.year + '-' + (data.date.month + 1) + '-' + data.yearDaysCount[data.date.month]
+        let params_to = data.date.year + '-' + (data.date.month + 2) + '-' + '1';
+        if (data.date.month + 2 === 13) {
+          params_to = (data.date.year + 1) + '-' + '1' + '-' + '1';
+        }
         let params = {'from': params_from, 'to': params_to}
         this.$store.dispatch('callEvents', params);
 
@@ -137,7 +140,10 @@
           data.yearDaysCount = setYearDaysCount(data.date.year);
         }
         let params_from = data.date.year + '-' + (data.date.month + 1) + '-' + '1';
-        let params_to = data.date.year + '-' + (data.date.month + 1) + '-' + data.yearDaysCount[data.date.month]
+        let params_to = data.date.year + '-' + (data.date.month + 2) + '-' + '1';
+        if (data.date.month + 2 === 13) {
+          params_to = (data.date.year + 1) + '-' + '1' + '-' + '1';
+        }
         let params = {'from': params_from, 'to': params_to}
         this.$store.dispatch('callEvents', params);
         this.addDayOtherMonth(this.$store.state, {year: data.date.year, month: data.date.month});

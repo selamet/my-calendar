@@ -57,9 +57,9 @@
         this.$store.state.calenderData.detailStatus = false;
       },
       createEvent() {
-        this.event.date.setDate(this.selectedDate.day);
-        this.event.date.setMonth(this.selectedDate.month);
-        this.event.date.setFullYear(this.selectedDate.year);
+        let fullDate = this.selectedDate.year + '-' + this.selectedDate.month + '-' + this.selectedDate.day + ' ' + this.event.date.getHours() + ':' + this.event.date.getMinutes();
+        this.event.date = fullDate;
+        this.event.flag = this.event.flag[0] ? this.event.flag[0] : 0;
         this.$store.dispatch('createEvent', this.event);
         this.event.date = new Date();
         this.gotToEventList();
