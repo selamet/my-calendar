@@ -37,6 +37,7 @@ export const store = new Vuex.Store({
       yearDaysCount: '',
     },
     events: [],
+    selectedEvent: {},
     auths: {
       token: "",
 

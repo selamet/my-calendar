@@ -13,7 +13,8 @@
         <textarea v-model="event.content" placeholder="Description..." class="description form-control" name=""
                   id=""></textarea>
         <multi-select class="tags" v-model="event.flag" :options="options" collapse-selected/>
-        <btn @click="createEvent()" class="save-button" size="sm">Kaydet</btn>
+        <btn @click="createEvent()" v-if="!isUpdate" class="save-button" size="sm">Create</btn>
+        <btn @click="createEvent()" v-else class="save-button" size="sm">Update</btn>
       </div>
     </div>
 
@@ -39,6 +40,7 @@
           content: '',
           flag: [],
         },
+        isUpdate: false,
         options: [
           {value: 1, label: 'Yellow'},
           {value: 2, label: 'Green'},
@@ -49,12 +51,17 @@
     },
     methods: {
       gotToEventList() {
+        this.$store.state.selectedEvent = {}
         this.$emit("goToEventList", '{false}');
+        this.setDefaultEvent();
       },
       exitDetail() {
         let detail = document.getElementById("detail");
         detail.style.display = 'none';
-        this.$store.state.calenderData.detailStatus = false;
+        this.isUpdate = false;
+        this.$emit("goToEventList", '{false}');
+        this.setDefaultEvent();
+
       },
       createEvent() {
         let fullDate = this.selectedDate.year + '-' + this.selectedDate.month + '-' + this.selectedDate.day + ' ' + this.event.date.getHours() + ':' + this.event.date.getMinutes();
@@ -64,15 +71,41 @@
         this.event.date = new Date();
         this.gotToEventList();
       },
+      updateOrCreate() {
+        if (this.selectedEvent) {
+          this.isUpdate = true;
+          this.event.title = this.selectedEvent.title;
+          this.event.content = this.selectedEvent.content;
+          this.event.date = new Date(
+            this.selectedEvent.date.year,
+            this.selectedEvent.date.month,
+            this.selectedEvent.date.day,
+            this.selectedEvent.date.hour,
+            this.selectedEvent.date.minute,
+          )
+        }
+      },
+      setDefaultEvent() {
+        this.event = {
+          date: new Date(),
+          title: '',
+          content: '',
+          flag: [],
+        }
+      },
 
     },
     computed: {
       ...mapGetters({
         selectedDate: 'getSelectedDate',
-        events: 'getEvents'
-
+        events: 'getEvents',
+        selectedEvent: 'getSelectedEvent',
       }),
+
     },
+    mounted() {
+      this.updateOrCreate();
+    }
 
   }
 

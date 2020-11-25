@@ -10,6 +10,10 @@ export const getEvents = (state) => {
   return state.events
 };
 
+export const getSelectedEvent = (state) => {
+  return state.selectedEvent
+};
+
 export const isAuthenticated = (state) => {
   return state.auths.token !== ""
 

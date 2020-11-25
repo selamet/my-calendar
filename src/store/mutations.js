@@ -9,7 +9,6 @@ export const addDayOtherMonth = (state, payload) => {
 };
 
 
-
 export const EVENT_CREATE = (state, payload) => {
   state.events.push(payload);
 };
@@ -27,3 +26,6 @@ export const GET_EVENTS = (state, payload) => {
 }
 
 
+export const SET_SELECTED_EVENT = (state, payload) => {
+  state.selectedEvent = payload;
+}

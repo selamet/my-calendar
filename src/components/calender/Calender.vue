@@ -93,6 +93,7 @@
         calenderData.selectedDate.month = calenderData.date.month + 1;
         calenderData.selectedDate.year = calenderData.date.year;
         calenderData.selectedDate.format = calenderData.selectedDate.day + '.' + calenderData.selectedDate.month + '.' + calenderData.selectedDate.year;
+        this.$store.state.selectedEvent = '';
         this.showDetail(event);
       },
       showDetail(event) {

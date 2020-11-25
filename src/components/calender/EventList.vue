@@ -24,7 +24,7 @@
       <ul>
         <li v-for="i in events"
             v-if="selectedDate.day === i.date.day && selectedDate.month === i.date.month && i.date.year === selectedDate.year">
-          <div><a href="#"><p class="title">{{i.title}}</p>  <span
+          <div><a><p @click="selectEvent(i)" class="title">{{i.title}}</p>  <span
             class="time">{{i.date.hour + ':' + i.date.minute}}</span> </a> <i class="delete-icon fa fa-minus"></i></div>
         </li>
       </ul>
@@ -58,13 +58,17 @@
         let detail = document.getElementById("detail");
         detail.style.display = 'none';
         this.$store.state.calenderData.detailStatus = false;
-      }
+      },
+      selectEvent(event) {
+        this.$store.commit('SET_SELECTED_EVENT', event);
+        this.$emit("goToEventCreate", '{true}');
+
+      },
     },
     computed: {
       ...mapGetters({
         selectedDate: 'getSelectedDate',
-        events: 'getEvents'
-
+        events: 'getEvents',
       }),
     }
   }
@@ -207,6 +211,7 @@
     display: flex;
   }
 
+
   .event-list ul::-webkit-scrollbar {
     display: none;
   }
@@ -214,6 +219,7 @@
   .event-list li a:hover {
     font-size: 20px;
     background: #f6f6f6;
+    cursor: pointer;
   }
 
   .event-list li div .title {
@@ -235,6 +241,11 @@
     justify-content: end;
     cursor: pointer;
     color: #000;
+
+
+  }
+
+  .event-list li div .delete-icon:hover {
 
   }
 
