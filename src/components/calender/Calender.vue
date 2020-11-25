@@ -41,7 +41,8 @@
               <div v-for="event in events"
                    v-if="event.date.day === i && calenderData.date.month === event.date.month-1 && calenderData.date.year === event.date.year"
                    class="tags">
-                {{event.date.hour}}:{{event.date.minute}}
+
+                <span>{{event.date.hour}}:{{event.date.minute}}</span>
               </div>
 
 
@@ -228,11 +229,11 @@
   }
 
   .date-picker .month {
-
+    height: 6vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 28px;
+    font-size: 2.5vw;
   }
 
   .date-picker .month .arrows {
@@ -290,8 +291,10 @@
     border: 1px solid #313131;
     border-radius: 2px;
     text-align: center;
+    align-items: center;
     background-color: antiquewhite;
-    font-size: 0.9vw;
+    font-size: 0.8vw;
+
   }
 
   .date-picker .dates .days .day .events::-webkit-scrollbar {
