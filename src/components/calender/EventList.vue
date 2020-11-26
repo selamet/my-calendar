@@ -70,7 +70,7 @@
         selectedDate: 'getSelectedDate',
         events: 'getEvents',
       }),
-    }
+    },
   }
 </script>
 

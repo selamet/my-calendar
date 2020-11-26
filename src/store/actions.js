@@ -43,6 +43,20 @@ export const createEvent = ({state, commit}, payload) => {
 
   })
 }
+export const updateEvent = ({state, commit}, payload) => {
+  let link = "http://localhost:8000/api/event/" + payload.uuid;
+  let config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${state.auths.token}`
+    }
+  }
+  return axios.patch(
+    link, payload, config
+  ).then(response => {
+    commit('EVENT_UPDATE', response.data)
+  })
+}
 
 
 export const login = ({commit, dispatch, state}, authData) => {

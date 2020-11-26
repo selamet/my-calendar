@@ -25,12 +25,19 @@ export const GET_EVENTS = (state, payload) => {
   state.events = payload;
 }
 
-
 export const SET_SELECTED_EVENT = (state, payload) => {
   state.selectedEvent = payload;
 }
 
 export const SET_SELECTED_EVENT_DEFAULT = (state) => {
   state.selectedEvent = '';
+}
+
+export const EVENT_UPDATE = (state, payload) => {
+  let index = state.events.map(event => {
+    return event.uuid;
+  }).indexOf(payload.uuid);
+  state.events.splice(index, 1);
+  state.events.push(payload);
 }
 

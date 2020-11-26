@@ -14,7 +14,7 @@
                   id=""></textarea>
         <multi-select class="tags" v-model="event.flag" :options="options" collapse-selected/>
         <btn @click="createEvent()" v-if="!isUpdate" class="save-button" size="sm">Create</btn>
-        <btn @click="createEvent()" v-else class="save-button" size="sm">Update</btn>
+        <btn @click="updateEvent()" v-else class="save-button" size="sm">Update</btn>
       </div>
     </div>
 
@@ -39,6 +39,7 @@ export default {
         title: '',
         content: '',
         flag: [],
+        uuid: '',
       },
       isUpdate: false,
       options: [
@@ -71,6 +72,15 @@ export default {
       this.event.date = new Date();
       this.gotToEventList();
     },
+    updateEvent() {
+      let fullDate = this.selectedDate.year + '-' + this.selectedDate.month + '-' + this.selectedDate.day + ' ' + this.event.date.getHours() + ':' + this.event.date.getMinutes();
+      this.event.date = fullDate;
+      this.event.flag = this.event.flag[0] ? this.event.flag[0] : 0;
+      this.$store.dispatch('updateEvent', this.event);
+      this.event.date = new Date();
+      this.gotToEventList();
+
+    },
     updateOrCreate() {
       if (this.selectedEvent) {
         this.isUpdate = true;
@@ -83,6 +93,7 @@ export default {
           this.selectedEvent.date.hour,
           this.selectedEvent.date.minute,
         )
+        this.event.uuid = this.selectedEvent.uuid;
       } else {
         this.setDefaultEvent();
       }
@@ -95,6 +106,7 @@ export default {
         flag: [],
       }
     },
+
 
   },
   computed: {
