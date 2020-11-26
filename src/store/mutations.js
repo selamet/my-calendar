@@ -29,3 +29,8 @@ export const GET_EVENTS = (state, payload) => {
 export const SET_SELECTED_EVENT = (state, payload) => {
   state.selectedEvent = payload;
 }
+
+export const SET_SELECTED_EVENT_DEFAULT = (state) => {
+  state.selectedEvent = '';
+}
+
