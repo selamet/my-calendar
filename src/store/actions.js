@@ -58,6 +58,20 @@ export const updateEvent = ({state, commit}, payload) => {
   })
 }
 
+export const destroyEvent = ({state, commit}, payload) => {
+  let link = "http://localhost:8000/api/event/" + payload;
+  let config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${state.auths.token}`
+    }
+  }
+  return axios.delete(
+    link, config
+  ).then(response => {
+  })
+}
+
 
 export const login = ({commit, dispatch, state}, authData) => {
   let loginLink = "http://localhost:8000/api/user/token/"

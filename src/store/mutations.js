@@ -41,3 +41,10 @@ export const EVENT_UPDATE = (state, payload) => {
   state.events.push(payload);
 }
 
+export const EVENT_DESTROY = (state, payload) => {
+  let index = state.events.map(event => {
+    return event.uuid;
+  }).indexOf(payload);
+  state.events.splice(index, 1);
+}
+
