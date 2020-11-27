@@ -12,10 +12,11 @@
 
       </div>
       <div class="priority">
-        <div style="background-color: #00c853" class="colors"></div>
-        <div style="background-color: #ffd600" class="colors"></div>
-        <div style="background-color: #0091ea" class="colors"></div>
-        <div style="background-color: #ff1744" class="colors"></div>
+        <div class="colors bg-red"></div>
+        <div class="colors bg-blue"></div>
+        <div class="colors bg-green"></div>
+        <div class="colors bg-yellow"></div>
+
       </div>
 
     </div>
@@ -25,7 +26,7 @@
         <li v-for="i in events"
             v-if="selectedDate.day === i.date.day && selectedDate.month === i.date.month && i.date.year === selectedDate.year">
           <div><a><p @click="selectEvent(i)" class="title">{{ i.title }}</p>  <span
-            class="time">{{ i.date.hour + ':' + i.date.minute }}</span> </a> <i @click="destroyEvent(i.uuid)"
+            class="time">{{ i.date.hour + ':' + i.date.minute }}</span>  </a> <i @click="destroyEvent(i.uuid)"
                                                                                 class="delete-icon fa fa-minus"></i>
           </div>
         </li>
@@ -34,7 +35,7 @@
     </div>
     <div class="create-event">
       <p style="text-align: center">
-        <btn class="create-event-button" size="sm">Oluştur</btn>
+        <btn @click="goToEventCreate" class="create-event-button" size="sm">Oluştur</btn>
       </p>
     </div>
 
@@ -152,6 +153,7 @@ export default {
   border: 1px solid #313131;
 }
 
+
 .filter .priority .colors:hover {
   border: 2px solid #313131;
   cursor: pointer;
@@ -251,8 +253,21 @@ export default {
 
 }
 
-.event-list li div .delete-icon:hover {
 
+.bg-red {
+  background-color: #f38181;
+}
+
+.bg-blue {
+  background-color: #00b7c2;
+}
+
+.bg-yellow {
+  background-color: #fce38a;
+}
+
+.bg-green {
+  background-color: #519872;
 }
 
 

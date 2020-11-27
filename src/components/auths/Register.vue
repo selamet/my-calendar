@@ -37,118 +37,125 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        user: {
-          email: null,
-          password: null,
-          passwordConfirm: null
-        },
-        isUser: false
-      }
-    },
-    methods: {
-      onSubmit() {
-        if (this.user.password !== this.user.passwordConfirm) {
+export default {
+  data() {
+    return {
+      user: {
+        email: null,
+        password: null,
+        passwordConfirm: null
+      },
+      isUser: false
+    }
+  },
+  methods: {
+    onSubmit() {
+      if (this.user.password !== this.user.passwordConfirm) {
+        alert('Something is wrong');
+      } else {
+        this.$store.dispatch("register", {...this.user, isUser: this.isUser})
+          .then(response => {
+            this.$router.push("/");
+          }).catch(er => {
           alert('Something is wrong');
-        } else {
-          this.$store.dispatch("register", {...this.user, isUser: this.isUser})
-            .then(response => {
-              this.$router.push("/");
-            }).catch(er => {
-              alert('Something is wrong');
-          })
-        }
-
+        })
       }
+
     }
   }
+}
 </script>
 
 <style scoped>
 
 
-  * {
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
-  }
+.register-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
-  h2 {
-    margin-bottom: 100px;
-    color: #313131;
-    font-size: 48px;
-    font-weight: 900;
-  }
+.register-page .header {
+  height: 30vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  font-weight: 900;
+  color: #313131;
+}
 
-  .login-logout {
-    float: right;
-    margin: 20px 20px 0 0;
-    font-size: 32px;
-  }
+.register-page .header h2 {
+  font-size: 48px;
+  font-weight: 900;
+  color: #313131;
+}
 
-  .register-page {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+.register-page .register-form {
+  height: 70vh;
+}
 
-  .container {
-    padding: 16px;
-    background-color: white;
-  }
-
-
-  input[type=text], input[type=password] {
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    display: inline-block;
-    border: none;
-    background: #f1f1f1;
+.container {
+  padding: 16px;
+  background-color: white;
+  border-radius: 5px;
+}
 
 
-  }
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
 
-  input[type=text]:focus, input[type=password]:focus {
-    background-color: #ddd;
-    outline: none;
-  }
 
-  hr {
-    border: 1px solid #f1f1f1;
-    margin-bottom: 25px;
-  }
+}
 
-  .register-btn {
-    background-color: #FFCE00;
-    color: #313131;
-    padding: 16px 20px;
-    margin: 8px 0;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
-    border: 1px solid #313131;
-    border-radius: 3px;
-  }
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
 
-  .register-btn:hover {
-    opacity: 1;
-  }
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
 
-  /* Add a blue text color to links */
-  a {
-    color: dodgerblue;
-  }
+.register-btn {
+  background-color: #FFCE00;
+  color: #313131;
+  padding: 16px 20px;
+  margin: 8px 0;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+  border: 1px solid #313131;
+  border-radius: 3px;
+}
 
-  /* Set a grey background color and center the text of the "sign in" section */
-  .sign-in {
-    background-color: #f1f1f1;
-    text-align: center;
-  }
+.register-btn:hover {
+  opacity: 1;
+}
+
+/* Add a blue text color to links */
+a {
+  color: dodgerblue;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.sign-in {
+  background-color: #f1f1f1;
+  text-align: center;
+}
 
 
 </style>
