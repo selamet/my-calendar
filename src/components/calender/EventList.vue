@@ -12,18 +12,18 @@
 
       </div>
       <div class="priority">
-        <div style="background-color: #00c853" class="colors"></div>
-        <div style="background-color: #ffd600" class="colors"></div>
-        <div style="background-color: #0091ea" class="colors"></div>
-        <div style="background-color: #ff1744" class="colors"></div>
+        <div v-for="tag in tags"
+             :class="{'bg-yellow' : tag === 1,'bg-green': tag === 2,'bg-blue' : tag === 3,'bg-red' : tag === 4, 'colors' : filter.choose !== tag ,'colors_select' : filter.choose === tag}"
+
+             @click="selectTag(tag)"
+        ></div>
       </div>
 
     </div>
 
     <div class="event-list">
       <ul>
-        <li v-for="i in events"
-            v-if="selectedDate.day === i.date.day && selectedDate.month === i.date.month && i.date.year === selectedDate.year">
+        <li v-for="i in events">
           <div><a><p @click="selectEvent(i)" class="title">{{ i.title }}</p>  <span
             class="time">{{ i.date.hour + ':' + i.date.minute }}</span> </a> <i @click="destroyEvent(i.uuid)"
                                                                                 class="delete-icon fa fa-minus"></i>
@@ -34,7 +34,7 @@
     </div>
     <div class="create-event">
       <p style="text-align: center">
-        <btn class="create-event-button" size="sm">Oluştur</btn>
+        <btn @click="goToEventCreate" class="create-event-button" size="sm">Oluştur</btn>
       </p>
     </div>
 
@@ -47,10 +47,21 @@
 
 import {mapGetters} from "vuex";
 import {Btn, MultiSelect, TimePicker} from 'uiv'
+import {getSelectedDate} from "../../store/getters";
 
 export default {
   components: {
     Btn
+  },
+  data() {
+    return {
+      events: [],
+      tags: [1, 2, 3, 4],
+      filter: {
+        status: false,
+        choose: '',
+      },
+    }
   },
   methods: {
     goToEventCreate() {
@@ -70,13 +81,58 @@ export default {
       this.$store.dispatch('destroyEvent', uuid);
       this.$store.commit('EVENT_DESTROY', uuid);
     },
+    initFilter() {
+      this.filter = {
+        status: false,
+        choose: '',
+      }
+    },
+    selectTag(tag) {
+      if (!this.filter.status) {
+        this.filter = {
+          status: true,
+          choose: tag,
+        }
+        this.events = this.events.filter(event => +event.flag === tag)
+      } else if (this.filter.status && this.filter.choose !== tag) {
+        this.getEventList(this.selectedDate);
+        this.events = this.events.filter(event => +event.flag === tag)
+        this.filter = {
+          status: true,
+          choose: tag,
+        }
+      } else {
+        this.getEventList(this.selectedDate);
+        this.initFilter();
+      }
+    },
+    getEventList(selectedDate) {
+      let events = [];
+      this.getEvents.forEach(function (i) {
+        if (selectedDate.day === i.date.day && selectedDate.month === i.date.month && i.date.year === selectedDate.year) {
+          events.push(i);
+        }
+      });
+      this.events = events;
+    }
   },
   computed: {
     ...mapGetters({
       selectedDate: 'getSelectedDate',
-      events: 'getEvents',
+      getEvents: 'getEvents',
     }),
   },
+  watch: {
+    '$store.state.calenderData.selectedDate.day': function () {
+      this.getEventList(this.selectedDate);
+      this.initFilter();
+    }
+  },
+  mounted() {
+    this.getEventList(this.selectedDate);
+  }
+
+
 }
 </script>
 
@@ -152,11 +208,24 @@ export default {
   border: 1px solid #313131;
 }
 
+.filter .priority .colors_select {
+  height: 14px;
+  width: 14px;
+  margin: 8px 2px;
+  border-radius: 50%;
+  grid-auto-flow: column;
+  float: right;
+  border: 2px solid #313131;
+  cursor: pointer;
+}
+
+
 .filter .priority .colors:hover {
   border: 2px solid #313131;
   cursor: pointer;
 
 }
+
 
 .event-list {
   height: 160px;
@@ -251,8 +320,21 @@ export default {
 
 }
 
-.event-list li div .delete-icon:hover {
 
+.bg-red {
+  background-color: #f38181;
+}
+
+.bg-blue {
+  background-color: #00b7c2;
+}
+
+.bg-yellow {
+  background-color: #fce38a;
+}
+
+.bg-green {
+  background-color: #519872;
 }
 
 
