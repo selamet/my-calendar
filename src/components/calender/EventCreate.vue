@@ -12,7 +12,7 @@
         <time-picker v-model="event.date" :show-meridian="false"/>
         <textarea v-model="event.content" placeholder="Description..." class="description form-control" name=""
                   id=""></textarea>
-        <multi-select class="tags" v-model="event.flag" :options="options" collapse-selected/>
+        <multi-select class="tags" v-model="event.flag" placeholder="Priority..." :options="options" collapse-selected/>
         <btn @click="createEvent()" v-if="!isUpdate" class="save-button" size="sm">Create</btn>
         <btn @click="updateEvent()" v-else class="save-button" size="sm">Update</btn>
       </div>
@@ -43,6 +43,7 @@ export default {
       },
       isUpdate: false,
       options: [
+        {value: 0, label: 'White'},
         {value: 1, label: 'Yellow'},
         {value: 2, label: 'Green'},
         {value: 3, label: 'Blue'},

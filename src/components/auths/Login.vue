@@ -37,112 +37,121 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        user: {
-          email: null,
-          password: null,
-        },
-        isUser: true
-      }
-    },
-    methods: {
-      onSubmit() {
-        this.$store.dispatch("login", {...this.user, isUser: this.isUser})
-          .then(response => {
-            this.$router.push("/");
-          }).catch(er=>{
-            alert('Something is wrong');
-        })
-      }
+export default {
+  data() {
+    return {
+      user: {
+        email: null,
+        password: null,
+      },
+      isUser: true
+    }
+  },
+  methods: {
+    onSubmit() {
+      this.$store.dispatch("login", {...this.user, isUser: this.isUser})
+        .then(response => {
+          this.$router.push("/");
+        }).catch(er => {
+        alert('Something is wrong');
+      })
     }
   }
+}
 </script>
 
 <style scoped>
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+
+}
+
+.forgot-password {
+  color: #313131;
+  text-decoration: underline;
+}
+
+.register-page {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.register-page .header {
+  height: 30vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.register-page .header h2 {
+  font-size: 48px;
+  font-weight: 900;
+  color: #313131;
+}
+
+.register-page .register-form {
+  height: 70vh;
+
+}
+
+.container {
+  padding: 16px;
+  background-color: white;
+}
 
 
-  * {
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
-
-  }
-
-  h2 {
-    margin-bottom: 100px;
-    color: #313131;
-    font-size: 48px;
-    font-weight: 900;
-  }
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
 
 
-  .forgot-password {
-    color: #313131;
-    text-decoration: underline;
-  }
+}
 
-  .register-page {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
 
-  .container {
-    padding: 16px;
-    background-color: white;
-  }
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
 
+.register-btn {
+  background-color: #FFCE00;
+  color: #313131;
+  padding: 16px 20px;
+  margin: 8px 0;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+  border: 1px solid #313131;
+  border-radius: 3px;
+}
 
-  input[type=text], input[type=password] {
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    display: inline-block;
-    border: none;
-    background: #f1f1f1;
+.register-btn:hover {
+  opacity: 1;
+}
 
+/* Add a blue text color to links */
+a {
+  color: dodgerblue;
+}
 
-  }
-
-  input[type=text]:focus, input[type=password]:focus {
-    background-color: #ddd;
-    outline: none;
-  }
-
-  hr {
-    border: 1px solid #f1f1f1;
-    margin-bottom: 25px;
-  }
-
-  .register-btn {
-    background-color: #FFCE00;
-    color: #313131;
-    padding: 16px 20px;
-    margin: 8px 0;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
-    border: 1px solid #313131;
-    border-radius: 3px;
-  }
-
-  .register-btn:hover {
-    opacity: 1;
-  }
-
-  /* Add a blue text color to links */
-  a {
-    color: dodgerblue;
-  }
-
-  /* Set a grey background color and center the text of the "sign in" section */
-  .sign-in {
-    background-color: #f1f1f1;
-    text-align: center;
-  }
+/* Set a grey background color and center the text of the "sign in" section */
+.sign-in {
+  background-color: #f1f1f1;
+  text-align: center;
+}
 
 
 </style>
