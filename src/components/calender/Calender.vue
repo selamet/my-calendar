@@ -23,8 +23,12 @@
                @click="selectDay(i,'prev')"
           >
             <div class="events">
+              <div v-for="event in events"
+                   v-if="event.date.day === i && calenderData.date.month-1 === event.date.month-1 && calenderData.date.year === event.date.year"
+                   class="tags" :class="colorClass(event.flag)">
 
-
+                <span>{{ event.date.hour }}:{{ event.date.minute }}</span>
+              </div>
             </div>
             <span class="day-no">{{ i }}</span>
 
@@ -55,7 +59,15 @@
           <div class="day day-other" v-for="i in calenderData.addDiv.end"
                @click="selectDay(i,'next')">
             <div class="events">
+              <div v-for="event in events"
+                   v-if="event.date.day === i
+                     &&  (calenderData.date.month + 1 === 1 ? 2 : (calenderData.date.month + 1 === 12 ?  12 : calenderData.date.month + 2))
+                     === (calenderData.date.month + 1 === 12 ? 12 : event.date.month) && calenderData.date.year
+                     === (calenderData.date.month + 1 === 12 ? +(event.date.year)-1 : event.date.year)"
+                   class="tags" :class="colorClass(event.flag)">
 
+                <span>{{ event.date.hour }}:{{ event.date.minute }}</span>
+              </div>
             </div>
 
 
@@ -127,15 +139,10 @@ export default {
         data.yearDaysCount = setYearDaysCount(data.date.year);
 
       }
-      let params_from = data.date.year + '-' + (data.date.month + 1) + '-' + '1';
-      let params_to = data.date.year + '-' + (data.date.month + 2) + '-' + '1';
-      if (data.date.month + 2 === 13) {
-        params_to = (data.date.year + 1) + '-' + '1' + '-' + '1';
-      }
-      let params = {'from': params_from, 'to': params_to}
+      this.addDayOtherMonth(this.$store.state, {year: data.date.year, month: data.date.month});
+      let params = this.createParams(data)
       this.$store.dispatch('callEvents', params);
 
-      this.addDayOtherMonth(this.$store.state, {year: data.date.year, month: data.date.month});
     },
     addDayOtherMonth(state, payload) {
       let start = new Date(payload.year, payload.month, 0);
@@ -153,15 +160,26 @@ export default {
         data.date.year--;
         data.yearDaysCount = setYearDaysCount(data.date.year);
       }
-      let params_from = data.date.year + '-' + (data.date.month + 1) + '-' + '1';
-      let params_to = data.date.year + '-' + (data.date.month + 2) + '-' + '1';
+      let params_from = (data.date.month === 0 ? data.date.year - 1 : data.date.year) + '-' + (data.date.month === 0 ? 12 : data.date.month) + '-' + '25';
+      let params_to = data.date.year + '-' + (data.date.month + 2) + '-' + '15';
       if (data.date.month + 2 === 13) {
-        params_to = (data.date.year + 1) + '-' + '1' + '-' + '1';
+        params_to = (data.date.year + 1) + '-' + '1' + '-' + '15';
       }
       let params = {'from': params_from, 'to': params_to}
       this.$store.dispatch('callEvents', params);
       this.addDayOtherMonth(this.$store.state, {year: data.date.year, month: data.date.month});
 
+    },
+
+    createParams(data) {
+      let params_from_month = data.date.month === 0 ? 12 : data.date.month
+      let params_from_day = 25
+      let params_from = (params_from_month === 12 ? data.date.year - 1 : data.date.year) + '-' + params_from_month + '-' + params_from_day;
+      let params_to = data.date.year + '-' + (data.date.month + 2) + '-' + '15';
+      if (data.date.month + 2 === 13) {
+        params_to = (data.date.year + 1) + '-' + '1' + '-' + '15';
+      }
+      return {'from': params_from, 'to': params_to}
     },
 
     colorClass(flag) {
@@ -212,8 +230,9 @@ export default {
       year: date.getFullYear(),
       month: date.getMonth()
     });
-
-    this.$store.dispatch('callEvents');
+    let data = this.calenderData;
+    let params = this.createParams(data)
+    this.$store.dispatch('callEvents', params);
 
 
   }
