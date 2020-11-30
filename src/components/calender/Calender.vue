@@ -19,7 +19,9 @@
 
         <div class="days">
           <div class="day day-other"
-               v-for="i in range(calenderData.yearDaysCount[calenderData.date.month === 0 ? 11 : calenderData.date.month-1]-calenderData.addDiv.start+1,calenderData.yearDaysCount[calenderData.date.month === 0 ? 11 : calenderData.date.month-1])">
+               v-for="i in range(calenderData.yearDaysCount[calenderData.date.month === 0 ? 11 : calenderData.date.month-1]-calenderData.addDiv.start+1,calenderData.yearDaysCount[calenderData.date.month === 0 ? 11 : calenderData.date.month-1])"
+               @click="selectDay(i,'prev')"
+          >
             <div class="events">
 
 
@@ -50,7 +52,8 @@
             <span class="day-no">{{ i }}</span>
 
           </div>
-          <div class="day day-other" v-for="i in calenderData.addDiv.end">
+          <div class="day day-other" v-for="i in calenderData.addDiv.end"
+               @click="selectDay(i,'next')">
             <div class="events">
 
             </div>
@@ -87,11 +90,21 @@ export default {
     logout() {
       this.$store.dispatch('logout');
     },
-    selectDay(day) {
+    selectDay(day, prev_or_next = '') {
       let calenderData = this.$store.state.calenderData
-      calenderData.selectedDate.day = day;
-      calenderData.selectedDate.month = calenderData.date.month + 1;
-      calenderData.selectedDate.year = calenderData.date.year;
+      if (!prev_or_next) {
+        calenderData.selectedDate.day = day;
+        calenderData.selectedDate.month = calenderData.date.month + 1;
+        calenderData.selectedDate.year = calenderData.date.year;
+      } else if (prev_or_next === 'prev') {
+        calenderData.selectedDate.day = day;
+        calenderData.selectedDate.month = calenderData.date.month === 0 ? 12 : calenderData.date.month;
+        calenderData.selectedDate.year = calenderData.date.month === 0 ? +calenderData.date.year - 1 : calenderData.date.year;
+      } else {
+        calenderData.selectedDate.day = day;
+        calenderData.selectedDate.month = calenderData.date.month === 11 ? 1 : calenderData.date.month + 2;
+        calenderData.selectedDate.year = calenderData.date.month === 11 ? +calenderData.date.year + 1 : calenderData.date.year;
+      }
       calenderData.selectedDate.format = calenderData.selectedDate.day + '.' + calenderData.selectedDate.month + '.' + calenderData.selectedDate.year;
       this.$store.commit('SET_SELECTED_EVENT_DEFAULT')
       this.showDetail(event);
