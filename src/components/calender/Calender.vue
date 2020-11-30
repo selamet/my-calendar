@@ -19,7 +19,7 @@
 
         <div class="days">
           <div class="day day-other"
-               v-for="i in range(calenderData.yearDaysCount[calenderData.date.month]-calenderData.addDiv.start+1,calenderData.yearDaysCount[calenderData.date.month])">
+               v-for="i in range(calenderData.yearDaysCount[calenderData.date.month === 0 ? 11 : calenderData.date.month-1]-calenderData.addDiv.start+1,calenderData.yearDaysCount[calenderData.date.month === 0 ? 11 : calenderData.date.month-1])">
             <div class="events">
 
 
@@ -123,7 +123,6 @@ export default {
       this.$store.dispatch('callEvents', params);
 
       this.addDayOtherMonth(this.$store.state, {year: data.date.year, month: data.date.month});
-
     },
     addDayOtherMonth(state, payload) {
       let start = new Date(payload.year, payload.month, 0);
