@@ -1,6 +1,19 @@
 <template>
   <div class="calender">
-    <h1><span> MY</span> CALENDER <span @click.prevent="logout">Logout</span></h1>
+    <div class="header">
+      <div class="null-div">
+
+      </div>
+      <div class="title">
+        <h1><span> MY</span> CALENDAR</h1>
+      </div>
+      <div class="logout">
+        <div>
+          Logout
+          <i class="fa fa-sign-out" aria-hidden="true"></i>
+        </div>
+      </div>
+    </div>
     <div class="date-picker">
       <div class="month">
         <div @click="goToPrevMonth(calenderData)" class="arrows prev-mth">&lt;</div>
@@ -256,6 +269,34 @@ h1 span {
   font-weight: 300;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logout {
+  width: 16%;
+  font-size: 16px;
+
+}
+
+.logout div {
+  width: 80px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+
+}
+
+.logout div:hover {
+  transform: scale(1.1);
+}
+
+.null-div {
+  width: 16%;
+
+}
 
 .date-picker {
   position: relative;
@@ -296,11 +337,13 @@ h1 span {
   align-items: center;
   color: #313131;
   font-size: 20px;
+  cursor: pointer;
 }
 
 .date-picker .month .arrows:hover {
   background-color: #f3f3f3;
 }
+
 
 .date-picker .dates .days {
   display: grid;
