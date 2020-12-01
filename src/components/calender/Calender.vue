@@ -24,7 +24,10 @@
           >
             <div class="events">
               <div v-for="event in events"
-                   v-if="event.date.day === i && calenderData.date.month-1 === event.date.month-1 && calenderData.date.year === event.date.year"
+                   v-if=" calenderData.date.month===0 ?
+                   event.date.day === i && event.date.month === 12 && event.date.year === calenderData.date.year-1
+                   :
+                   event.date.day === i && calenderData.date.month-1 === event.date.month-1 && calenderData.date.year === event.date.year"
                    class="tags" :class="colorClass(event.flag)">
 
                 <span>{{ event.date.hour }}:{{ event.date.minute }}</span>
