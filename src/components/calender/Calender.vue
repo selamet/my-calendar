@@ -43,7 +43,7 @@
                    event.date.day === i && calenderData.date.month-1 === event.date.month-1 && calenderData.date.year === event.date.year"
                    class="tags" :class="colorClass(event.flag)">
 
-                <span>{{ event.date.hour }}:{{ event.date.minute }}</span>
+                <span>{{ event.date.hour|addZero }}:{{ event.date.minute|addZero }}</span>
               </div>
             </div>
             <span class="day-no">{{ i }}</span>
@@ -64,7 +64,7 @@
                    v-if="event.date.day === i && calenderData.date.month === event.date.month-1 && calenderData.date.year === event.date.year"
                    class="tags" :class="colorClass(event.flag)">
 
-                <span>{{ event.date.hour }}:{{ event.date.minute }}</span>
+                <span>{{ event.date.hour|addZero }}:{{ event.date.minute|addZero }}</span>
               </div>
 
 
@@ -82,7 +82,7 @@
                      === (calenderData.date.month + 1 === 12 ? +(event.date.year)-1 : event.date.year)"
                    class="tags" :class="colorClass(event.flag)">
 
-                <span>{{ event.date.hour }}:{{ event.date.minute }}</span>
+                <span>{{ event.date.hour|addZero }}:{{ event.date.minute|addZero }}</span>
               </div>
             </div>
 

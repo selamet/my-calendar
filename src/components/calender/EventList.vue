@@ -25,8 +25,9 @@
       <ul>
         <li v-for="i in events">
           <div><a><p @click="selectEvent(i)" class="title">{{ i.title }}</p>  <span
-            class="time">{{ i.date.hour + ':' + i.date.minute }}</span> </a> <i @click="destroyEvent(i.uuid)"
-                                                                                class="delete-icon fa fa-minus"></i>
+            class="time">{{ i.date.hour|addZero }}:{{ i.date.minute|addZero }}</span> </a> <i
+            @click="destroyEvent(i.uuid)"
+            class="delete-icon fa fa-minus"></i>
           </div>
         </li>
       </ul>

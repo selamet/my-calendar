@@ -5,6 +5,15 @@ import {router} from "./router"
 
 import * as uiv from 'uiv'
 
+Vue.filter('addZero', function (value) {
+  value = value.toString();
+  if (value.length === 1) {
+    return '0' + value
+  } else {
+    return value
+  }
+});
+
 new Vue({
   el: '#app',
   router,
