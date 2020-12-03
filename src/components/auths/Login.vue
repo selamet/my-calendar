@@ -9,18 +9,25 @@
         <form @submit.prevent="onSubmit">
           <div class="container">
 
-
             <label for="email"><b>Email</b></label>
-            <input v-model="user.email" type="text" placeholder="Enter Email" name="email" id="email" required>
+            <input
+              @blur="$v.user.email.$touch()"
+              v-model="user.email"
+              type="text"
+              placeholder="Enter Email"
+              name="email"
+              id="email">
 
             <label for="psw"><b>Password</b></label>
             <input v-model="user.password" type="password" placeholder="Enter Password" name="psw" id="psw" required>
-
+            <small v-if="$v.user.email.$error" class="text-danger">Please enter a valid e-mail!</small><br>
 
             <hr>
             <p><a class="forgot-password" href="#">Forgot Password?</a></p>
 
-            <button type="submit" class="register-btn">Sign in</button>
+            <button type="submit" class="register-btn" :title="$v.$invalid? 'Someting went wrong': null"
+                    :disabled="$v.$invalid">Sign in
+            </button>
           </div>
 
           <div class="container sign-in">
@@ -37,6 +44,8 @@
 </template>
 
 <script>
+import {required, email} from 'vuelidate/lib/validators'
+
 export default {
   data() {
     return {
@@ -47,13 +56,24 @@ export default {
       isUser: true
     }
   },
+  validations: {
+    user: {
+      email: {
+        required,
+        email
+      },
+      password: {
+        required
+      }
+    }
+  },
   methods: {
     onSubmit() {
       this.$store.dispatch("login", {...this.user, isUser: this.isUser})
         .then(response => {
           this.$router.push("/");
         }).catch(er => {
-        alert('Something is wrong');
+        alert('Incorrect username or password.');
       })
     }
   }
@@ -138,8 +158,14 @@ hr {
   border-radius: 3px;
 }
 
-.register-btn:hover {
+.register-btn:hover:not([disabled]) {
   opacity: 1;
+}
+
+.register-btn:disabled {
+  background-color: #20232a;
+  color: whitesmoke;
+  cursor: auto;
 }
 
 /* Add a blue text color to links */

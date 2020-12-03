@@ -7,7 +7,7 @@
       <div class="title">
         <h1><span> MY</span> CALENDAR</h1>
       </div>
-      <div class="logout">
+      <div @click="logout()" class="logout">
         <div>
           Logout
           <i class="fa fa-sign-out" aria-hidden="true"></i>

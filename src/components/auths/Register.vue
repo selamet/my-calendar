@@ -9,18 +9,39 @@
         <form @submit.prevent="onSubmit">
           <div class="container">
             <label for="email"><b>Email</b></label>
-            <input v-model="user.email" type="text" placeholder="Enter Email" name="email" id="email" required>
+            <input
+              @blur="$v.user.email.$touch()"
+              v-model="user.email"
+              type="text"
+              placeholder="Enter Email"
+              name="email" id="email" required>
 
             <label for="psw"><b>Password</b></label>
-            <input v-model="user.password" type="password" placeholder="Enter Password" name="psw" id="psw" required>
+            <input
+              @blur="$v.user.password.$touch()"
+              v-model="user.password"
+              type="password"
+              placeholder="Enter Password"
+              name="psw" id="psw" required>
 
             <label for="psw-repeat"><b>Repeat Password</b></label>
-            <input v-model="user.passwordConfirm" type="password" placeholder="Repeat Password" name="psw-repeat"
-                   id="psw-repeat" required>
+            <input
+              @blur="$v.user.passwordConfirm.$touch()"
+              v-model="user.passwordConfirm"
+              type="password"
+              placeholder="Repeat Password"
+              name="psw-repeat"
+              id="psw-repeat" required>
+            <small v-if="$v.user.email.$error" class="text-danger">Please enter a valid e-mail!</small><br>
+            <small v-if="$v.user.passwordConfirm.$error" class="text-danger">Passwords do not match!</small><br>
+            <small v-if="$v.user.password.$error" class="text-danger">Password is too short (minimum is 8 characters),
+              needs at least 1 number, and is in a list of passwords commonly used on other websites.</small>
             <hr>
 
             <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
-            <button type="submit" class="register-btn">Register</button>
+            <button type="submit" class="register-btn" :title="$v.$invalid? 'Someting went wrong': null"
+                    :disabled="$v.$invalid">Register
+            </button>
           </div>
 
           <div class="container sign-in">
@@ -37,6 +58,9 @@
 </template>
 
 <script>
+
+import {required, email, sameAs, minLength} from 'vuelidate/lib/validators'
+
 export default {
   data() {
     return {
@@ -48,6 +72,24 @@ export default {
       isUser: false
     }
   },
+  validations: {
+    user: {
+      email: {
+        email,
+        required
+      },
+      password: {
+        required,
+        minLength: minLength(8),
+
+      },
+      passwordConfirm: {
+        sameAs: sameAs('password'),
+        required
+
+      }
+    }
+  },
   methods: {
     onSubmit() {
       if (this.user.password !== this.user.passwordConfirm) {
@@ -57,7 +99,7 @@ export default {
           .then(response => {
             this.$router.push("/");
           }).catch(er => {
-          alert('Something is wrong');
+          alert('Email ' + this.user.email + ' is not available.');
         })
       }
 
@@ -82,6 +124,13 @@ export default {
   justify-content: center;
 }
 
+.register-btn:disabled {
+  background-color: #20232a;
+  color: whitesmoke;
+  cursor: auto;
+}
+
+
 .register-page .header {
   height: 30vh;
   display: flex;
@@ -105,7 +154,6 @@ export default {
 .container {
   padding: 16px;
   background-color: white;
-  border-radius: 5px;
 }
 
 
@@ -142,7 +190,7 @@ hr {
   border-radius: 3px;
 }
 
-.register-btn:hover {
+.register-btn:hover:not([disabled]) {
   opacity: 1;
 }
 

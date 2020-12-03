@@ -4,6 +4,9 @@ import {store} from "./store/store"
 import {router} from "./router"
 
 import * as uiv from 'uiv'
+import Vuelidate from "vuelidate";
+
+Vue.use(Vuelidate)
 
 Vue.filter('addZero', function (value) {
   value = value.toString();
