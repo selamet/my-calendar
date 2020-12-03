@@ -29,7 +29,7 @@ export const initAuth = ({commit, dispatch}) => {
 }
 
 export const createEvent = ({state, commit}, payload) => {
-  let link = "http://localhost:8000/api/event/"
+  let link = state.base_url + "event/"
   let config = {
     headers: {
       'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export const createEvent = ({state, commit}, payload) => {
   })
 }
 export const updateEvent = ({state, commit}, payload) => {
-  let link = "http://localhost:8000/api/event/" + payload.uuid;
+  let link = state.base_url + "event/" + payload.uuid;
   let config = {
     headers: {
       'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export const updateEvent = ({state, commit}, payload) => {
 }
 
 export const destroyEvent = ({state, commit}, payload) => {
-  let link = "http://localhost:8000/api/event/" + payload;
+  let link = state.base_url + "event/" + payload;
   let config = {
     headers: {
       'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ export const destroyEvent = ({state, commit}, payload) => {
 
 
 export const login = ({commit, dispatch, state}, authData) => {
-  let loginLink = "http://localhost:8000/api/user/token/"
+  let loginLink = state.base_url + "user/token/"
   let config = {
     headers: {
       'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ export const login = ({commit, dispatch, state}, authData) => {
 }
 
 export const register = ({commit, dispatch, state}, authData) => {
-  let registerLink = "http://localhost:8000/api/user/register/"
+  let registerLink = state.base_url + "user/register/"
   let config = {
     headers: {
       'Content-Type': 'application/json',
@@ -129,7 +129,7 @@ export const setTimeoutTimer = ({dispatch}, expiresIn) => {
 
 
 export const callEvents = ({commit, dispatch, state}, params) => {
-  let link = "http://localhost:8000/api/event"
+  let link = state.base_url + "event"
   if (params) {
     link += '/?from=' + params.from + '&to=' + params.to;
   }

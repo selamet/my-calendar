@@ -41,7 +41,8 @@ export const store = new Vuex.Store({
     auths: {
       token: "",
 
-    }
+    },
+    base_url : 'http://localhost:8000/api/'
   },
   getters,
   mutations,
