@@ -1,4 +1,4 @@
-# my-calender
+# my-calendar
 
 > A Vue.js project
 

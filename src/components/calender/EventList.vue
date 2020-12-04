@@ -35,7 +35,7 @@
     </div>
     <div class="create-event">
       <p style="text-align: center">
-        <btn @click="goToEventCreate" class="create-event-button" size="sm">Oluştur</btn>
+        <btn @click="goToEventCreate" class="create-event-button" size="sm">Create</btn>
       </p>
     </div>
 

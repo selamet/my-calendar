@@ -377,12 +377,23 @@ h1 span {
   margin: 3px;
   flex-wrap: wrap;
   width: 40%;
-  justify-content: space-around;
   border: 1px solid #313131;
   border-radius: 2px;
-  text-align: center;
+  display: flex;
   align-items: center;
-  font-size: 0.8vw;
+  justify-content: center;
+  font-size: 12px;
+
+
+}
+
+.date-picker .dates .days .day .events .tags span {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+
 
 }
 
