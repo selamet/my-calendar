@@ -140,6 +140,11 @@ export default {
     showDetail(event) {
       let x = event.clientX;
       let y = event.clientY;
+      if (x < 250) {
+        x = 251;
+      } else if (x > 750) {
+        x = 750;
+      }
       let detail = document.getElementById("detail");
       detail.style.display = 'block';
       detail.style.position = 'absolute';
