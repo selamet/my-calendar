@@ -1,6 +1,13 @@
 # my-calendar
 
  My Calendar is a simple calendar application. To review the project's back end code [my-calendar-backend](https://github.com/selamet/my-calendar-backend).
+ 
+ 
+ ## Test Account:
+ ```
+ mail : test@selamet.dev
+ password: test123123
+ ```
 
 
 
