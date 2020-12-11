@@ -1,6 +1,15 @@
 # my-calendar
 
-> A Vue.js project
+ My Calendar is a simple calendar application. To review the project's back end code [my-calendar-backend](https://github.com/selamet/my-calendar-backend).
+ 
+ 
+ ## Test Account:
+ ```
+ mail : test@selamet.dev
+ password: test123123
+ ```
+
+
 
 ## Build Setup
 
@@ -15,4 +24,3 @@ npm run dev
 npm run build
 ```
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
