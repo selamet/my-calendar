@@ -67,6 +67,7 @@ export default {
   methods: {
     goToEventCreate() {
       this.$emit("goToEventCreate", '{true}');
+      this.$store.state.selectedEvent = '';
     },
     exitDetail() {
       let detail = document.getElementById("detail");

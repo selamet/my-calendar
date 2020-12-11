@@ -71,6 +71,7 @@ export default {
       this.event.flag = this.event.flag[0] ? this.event.flag[0] : 0;
       this.$store.dispatch('createEvent', this.event);
       this.event.date = new Date();
+      this.isUpdate =false
       this.gotToEventList();
     },
     updateEvent() {
@@ -97,6 +98,7 @@ export default {
         this.event.uuid = this.selectedEvent.uuid;
       } else {
         this.setDefaultEvent();
+
       }
     },
     setDefaultEvent() {
