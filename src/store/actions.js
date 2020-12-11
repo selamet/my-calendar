@@ -3,6 +3,8 @@ import {router} from "../router"
 
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+axios.defaults.baseURL = 'http://localhost:8000/api'
+axios.defaults.headers = {'Content-Type': 'application/json',}
 
 export const initAuth = ({commit, dispatch}) => {
   let token = localStorage.getItem('token');
@@ -28,62 +30,71 @@ export const initAuth = ({commit, dispatch}) => {
   }
 }
 
-export const createEvent = ({state, commit}, payload) => {
-  let link = state.base_url + "event/"
+export const callEvents = ({commit, dispatch, state}, params) => {
+  let link =  "/event"
+  if (params) {
+    link += `/?from=${params.from}&to=${params.to}`;
+  }
   let config = {
     headers: {
-      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${state.auths.token}`
+    }
+  }
+
+  return axios.get(
+    link, config
+  ).then(response => {
+    commit('GET_EVENTS', response.data);
+  })
+
+}
+export const createEvent = ({state, commit}, payload) => {
+  let config = {
+    headers: {
       'Authorization': `Bearer ${state.auths.token}`
     }
   }
   return axios.post(
-    link, payload, config
+    "/event/", payload, config
   ).then(response => {
     commit('EVENT_CREATE', response.data)
 
   })
 }
 export const updateEvent = ({state, commit}, payload) => {
-  let link = state.base_url + "event/" + payload.uuid;
   let config = {
     headers: {
-      'Content-Type': 'application/json',
       'Authorization': `Bearer ${state.auths.token}`
     }
   }
   return axios.patch(
-    link, payload, config
+    `/event/${payload.uuid}`, payload, config
   ).then(response => {
     commit('EVENT_UPDATE', response.data)
   })
 }
-
 export const destroyEvent = ({state, commit}, payload) => {
-  let link = state.base_url + "event/" + payload;
   let config = {
     headers: {
-      'Content-Type': 'application/json',
       'Authorization': `Bearer ${state.auths.token}`
     }
   }
   return axios.delete(
-    link, config
+    `/event/${payload}`, config
   ).then(response => {
+    commit('EVENT_DESTROY', response.data)
   })
 }
-
 
 export const login = ({commit, dispatch, state}, authData) => {
-  let loginLink = state.base_url + "user/token/"
-  let config = {
-    headers: {
-      'Content-Type': 'application/json',
-    }
+  let data = {
+    username: authData.email,
+    password: authData.password
   }
 
   return axios.post(
-    loginLink,
-    {username: authData.email, password: authData.password}, config
+    "/user/token/",
+    data,
   ).then(response => {
     commit('SET_TOKEN', response.data.access);
     localStorage.setItem("token", response.data.access);
@@ -92,18 +103,15 @@ export const login = ({commit, dispatch, state}, authData) => {
   })
 
 }
-
 export const register = ({commit, dispatch, state}, authData) => {
-  let registerLink = state.base_url + "user/register/"
-  let config = {
-    headers: {
-      'Content-Type': 'application/json',
-    }
+  let data ={
+    email: authData.email,
+    password: authData.password
   }
 
+
   return axios.post(
-    registerLink,
-    {email: authData.email, password: authData.password}, config
+    "/user/register/",data
   ).then(response => {
     commit('SET_TOKEN', response.data.access);
     localStorage.setItem("token", response.data.access);
@@ -112,7 +120,6 @@ export const register = ({commit, dispatch, state}, authData) => {
   })
 
 }
-
 export const logout = ({commit}) => {
   commit('CLEAR_TOKEN');
   localStorage.removeItem("token");
@@ -125,26 +132,5 @@ export const setTimeoutTimer = ({dispatch}, expiresIn) => {
   setTimeout(() => {
     dispatch("logout");
   }, expiresIn)
-}
-
-
-export const callEvents = ({commit, dispatch, state}, params) => {
-  let link = state.base_url + "event"
-  if (params) {
-    link += '/?from=' + params.from + '&to=' + params.to;
-  }
-  let config = {
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${state.auths.token}`
-    }
-  }
-
-  return axios.get(
-    link, config
-  ).then(response => {
-    commit('GET_EVENTS', response.data);
-  })
-
 }
 

@@ -40,7 +40,6 @@ export const store = new Vuex.Store({
     selectedEvent: {},
     auths: {
       token: "",
-
     },
     base_url : 'http://localhost:8000/api/'
   },
