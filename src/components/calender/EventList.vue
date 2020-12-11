@@ -80,7 +80,11 @@ export default {
     },
     destroyEvent(uuid) {
       this.$store.dispatch('destroyEvent', uuid);
-      this.$store.commit('EVENT_DESTROY', uuid);
+      let index = this.events.map(event => {
+        return event.uuid;
+      }).indexOf(uuid);
+      this.events.splice(index, 1);
+
     },
     initFilter() {
       this.filter = {
@@ -127,7 +131,7 @@ export default {
     '$store.state.calenderData.selectedDate.day': function () {
       this.getEventList(this.selectedDate);
       this.initFilter();
-    }
+    },
   },
   mounted() {
     this.getEventList(this.selectedDate);

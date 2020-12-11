@@ -81,8 +81,8 @@ export const destroyEvent = ({state, commit}, payload) => {
   }
   return axios.delete(
     `/event/${payload}`, config
-  ).then(response => {
-    commit('EVENT_DESTROY', response.data)
+  ).then( _  => {
+    commit('EVENT_DESTROY', payload)
   })
 }
 
@@ -91,7 +91,6 @@ export const login = ({commit, dispatch, state}, authData) => {
     username: authData.email,
     password: authData.password
   }
-
   return axios.post(
     "/user/token/",
     data,
